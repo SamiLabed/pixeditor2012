@@ -23,11 +23,13 @@ Flou::~Flou()
     delete [] noyau;
 }
 
-float Flou::calculMoy(int x, int y, RgbImageFloat img, char color)
+void Flou::calculMoy(int x, int y, RgbImageFloat img)
 {
     int i, j;
     int borneMiniLig, borneMiniCol, borneMaxiLig, borneMaxiCol;
-    float res=0;
+    float resB = 0;
+    float resG = 0;
+    float resR = 0;
 
     borneMiniLig = x - rayon;
     if(borneMiniLig < 0)
@@ -45,37 +47,17 @@ float Flou::calculMoy(int x, int y, RgbImageFloat img, char color)
     if(borneMaxiCol >= maxcol)
         borneMaxiCol = maxcol - 1;
 
-    if(color == 'b')
+    for(i = borneMiniLig; i <= borneMaxiLig; i++)
     {
-        for(i = borneMiniLig; i <= borneMaxiLig; i++)
+        for(j= borneMiniCol; j <= borneMaxiCol; j++)
         {
-            for(j= borneMiniCol; j <= borneMaxiCol; j++)
-            {
-                res += img[i][j].b*val;
-            }
-        }
-    }
-    else if(color == 'g')
-    {
-        for(i = borneMiniLig; i <= borneMaxiLig; i++)
-        {
-            for(j= borneMiniCol; j <= borneMaxiCol; j++)
-            {
-                res += img[i][j].g*val;
-            }
-        }
-    }
-    else if(color == 'r')
-    {
-        for(i = borneMiniLig; i <= borneMaxiLig; i++)
-        {
-            for(j= borneMiniCol; j <= borneMaxiCol; j++)
-            {
-                res += img[i][j].r*val;
-            }
+            resB += img[i][j].b * val;
+            resG += img[i][j].g * val;
+            resR += img[i][j].r * val;
         }
     }
 
-
-    return res;
+    img[x][y].b = resB;
+    img[x][y].g = resG;
+    img[x][y].r = resR;
 }
