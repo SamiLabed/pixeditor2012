@@ -11,8 +11,8 @@ SOURCES += Affichage.cpp \
     colorpicker.cpp \
     Floudialog.cpp \
     Flou.cpp \
-	gris.cpp \
-	Fusion.cpp
+    gris.cpp \
+    Fusion.cpp
 
 HEADERS += PixEditor.h \
     Affichage.h \
@@ -20,5 +20,5 @@ HEADERS += PixEditor.h \
     colorpicker.h \
     Floudialog.h \
     Flou.h \
-	gris.cpp \
-	Fusion.cpp
+    gris.h \
+    Fusion.h
