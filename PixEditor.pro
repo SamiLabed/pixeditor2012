@@ -10,10 +10,15 @@ SOURCES += Affichage.cpp \
     Main.cpp \
     colorpicker.cpp \
     Floudialog.cpp \
-    Flou.cpp
+    Flou.cpp \
+	gris.cpp \
+	Fusion.cpp
+
 HEADERS += PixEditor.h \
     Affichage.h \
     Image.h \
     colorpicker.h \
     Floudialog.h \
-    Flou.h
+    Flou.h \
+	gris.cpp \
+	Fusion.cpp
