@@ -1,5 +1,5 @@
-#ifndef PIXEDITOR_H
-#define PIXEDITOR_H
+#ifndef MAFENETRE_H
+#define MAFENETRE_H
 
 #include <QtGui/QMainWindow>
 #include <QApplication>
@@ -15,9 +15,9 @@ class PixEditor : public QMainWindow
     private:
         Affichage widgetcentral;
         QMenuBar *barre_menu;
-        QMenu *menu_fichier, *menu_outils;
+        QMenu *menu_fichier, *menu_outils ,*histo_menu;
         QAction *nouveau_action, *ouvrir_action, *sauver_action, *sauversous_action, *quitter_action;
-        QAction *flou_action;
+        QAction *flou_action, *histo_action;
 
 
     public:
@@ -28,4 +28,4 @@ class PixEditor : public QMainWindow
 
 };
 
-#endif // PIXEDITOR_H
+#endif // MAFENETRE_H

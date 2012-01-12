@@ -1,5 +1,5 @@
-#ifndef AFFICHAGE_H
-#define AFFICHAGE_H
+#ifndef WIDGETPRINCIPAL_H
+#define WIDGETPRINCIPAL_H
 
 #include <math.h>
 #include <QApplication>
@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <QRgb>
+#include <Floudialog.h>
 
 class Affichage : public QWidget
 {
@@ -21,11 +22,18 @@ class Affichage : public QWidget
         QGraphicsScene *scene;
         QGraphicsView *vue;
         QVBoxLayout *position_fenetre;
-        QImage *image;
+
+        QPixmap monPixmap;
         bool is_save;
         QString fichier_save;
+        QString nomFichier;
+        FlouDialog dialogFlou;
+
     public:
         Affichage();
+        void loadImag();
+        void printImag();
+        QImage *image;
 
     public slots:
         void nouveau();
@@ -34,11 +42,12 @@ class Affichage : public QWidget
         bool sauvegarderSous();
         bool testSauvegarde();
         void quitter();
-        //void flou();
+        void flou();
+        void histogramme();
 
     signals:
 };
 
 
 
-#endif // AFFICHAGE_H
+#endif // WIDGETPRINCIPAL_H

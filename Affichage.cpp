@@ -1,8 +1,8 @@
 #include "Affichage.h"
-#include "Image.h"
-#include "Flou.h"
 #include <iostream>
 #include <stdio.h>
+#include "Image.h"
+#include "Flou.h"
 #include <unistd.h>
 
 Affichage::Affichage()
@@ -55,7 +55,7 @@ bool Affichage::sauvegarderSous()
 
     /*if(QFile::exists(fichier))
     {
-        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe dj !\nVoulez-vous l'craser ?", QMessageBox::Yes | QMessageBox::No);
+        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe déjà !\nVoulez-vous l'écraser ?", QMessageBox::Yes | QMessageBox::No);
 
         if (reponse == QMessageBox::No)
             return false;
@@ -88,33 +88,77 @@ void Affichage::ouvrir()
 
         if(fichier != "")
         {
+            nomFichier=fichier;
             // Algo ouverture
             nouveau();
-            image = new QImage(fichier, 0);
-            QPixmap monPixmap;
+            loadImag();
+            printImag();
+            //load
+            ////image = new QImage(fichier, 0);
 
+            //affichage
+            ////QPixmap monPixmap;
+            ////int i,j;
+            ////std::cout<<"test\n";
+
+            /* Exemple :
+              On met le pixel au coordonnee 0,0 est a R=200, G=100, B=0
+            */
+            ////for(i=0; i < 1; i++)
+            ////{
+            ////    QRgb* rgb = (QRgb*)image->scanLine(i);
+            ////    for(j=0; j < 1; j++)
+            ////    {
+            ////        rgb[j] = qRgb(200,100,0);
+            ////    }
+            ////}
+            /*
+              Fin exemple
+              */
+
+            //printImag
             // On regarde si le pixel possede bien les composantes (RGB) qu'on a mis precedemment.
-            RgbImage rgbimg(image);
+            ////RgbImage rgbimg(*image);
+            ////printf("%d,%d,%d\n", rgbimg[0][0].b, rgbimg[0][0].g, rgbimg[0][0].r);
 
-            Flou f(7, image->height(), image->width());
-            int i,j;
+            ////monPixmap = QPixmap::fromImage(*image, Qt::AutoColor);
+            ////scene->addPixmap(monPixmap);
+            ////vue->setScene(scene);
+            //Fin Print
 
-            for(i=0; i < image->height(); i++)
-            {
-                for(j=0; j < image->width(); j++)
-                {
-                    f.calculMoy(i, j, rgbimg);
-                }
-            }
+            ////fichier_save = fichier;
+            ////is_save = true;
 
-            monPixmap = QPixmap::fromImage(*image);
-            scene->addPixmap(monPixmap);
-            vue->setScene(scene);
-
-            fichier_save = fichier;
-            is_save = true;
         }
     }
+}
+
+void Affichage::loadImag()
+{
+    image = new QImage(nomFichier, 0);
+}
+
+void Affichage::printImag()
+{
+    RgbImage rgbimg(image);
+    //printf("%d,%d,%d\n", rgbimg[0][0].b, rgbimg[0][0].g, rgbimg[0][0].r);
+
+    monPixmap = QPixmap::fromImage(*image, Qt::AutoColor);
+    scene->addPixmap(monPixmap);
+    vue->setScene(scene);
+    fichier_save = nomFichier;
+    setFixedSize(image->width(),image->height());
+    is_save = true;
+}
+
+void Affichage::flou()
+{
+
+}
+
+void Affichage::histogramme()
+{
+
 }
 
 void Affichage::quitter()
@@ -122,6 +166,3 @@ void Affichage::quitter()
     if(testSauvegarde())
         qApp->quit();
 }
-
-
-
