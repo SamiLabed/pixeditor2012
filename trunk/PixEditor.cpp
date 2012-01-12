@@ -46,15 +46,23 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
+    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(flou()));
 
     menu_outils = new QMenu(tr("F&iltre"), this);
     menu_outils->addAction(flou_action);
 
+    //histogramme
+    histo_action = new QAction(tr("&Rouge"),this);
+    QObject::connect(histo_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogramme()));
+    histo_menu=new QMenu(tr("&Histogramme"),this);
+    histo_menu->addAction(histo_action);
+
+
     barre_menu = new QMenuBar(this);
     barre_menu->addMenu(menu_fichier);
     barre_menu->addMenu(menu_outils);
+    barre_menu->addMenu(histo_menu);
 
     setMenuBar(barre_menu);
 }
