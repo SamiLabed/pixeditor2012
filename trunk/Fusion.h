@@ -10,8 +10,8 @@ public:
     void calculFusion(float p);
 protected:
 private:
-    RgbImage* imgbase;
-    RgbImage* imgchoisi;
+    RgbImage imgbase;
+    RgbImage imgchoisi;
 };
 
 #endif // FUSION_H
