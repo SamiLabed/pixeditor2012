@@ -1,25 +1,19 @@
-#-------------------------------------------------
-#
+# -------------------------------------------------
 # Project created by QtCreator 2012-01-11T15:28:50
-#
-#-------------------------------------------------
-
-QT       += core gui
-
+# -------------------------------------------------
+QT += core \
+    gui
 TARGET = PixEditor
 TEMPLATE = app
-
-
-SOURCES +=\
-    Main.cpp \
-    Flou.cpp \
+SOURCES += Affichage.cpp \
     PixEditor.cpp \
-    Affichage.cpp \
-    Fusion.cpp
-
-HEADERS  += \
-    Image.h \
-    Flou.h \
-    PixEditor.h \
+    Main.cpp \
+    colorpicker.cpp \
+    Floudialog.cpp \
+    Flou.cpp
+HEADERS += PixEditor.h \
     Affichage.h \
-    Fusion.h
+    Image.h \
+    colorpicker.h \
+    Floudialog.h \
+    Flou.h
