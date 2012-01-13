@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "Image.h"
 #include "Flou.h"
-#include <unistd.h>
+#include "Fusiondialog.h"
 
 Affichage::Affichage()
 {
@@ -55,7 +55,7 @@ bool Affichage::sauvegarderSous()
 
     /*if(QFile::exists(fichier))
     {
-        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe déjà !\nVoulez-vous l'écraser ?", QMessageBox::Yes | QMessageBox::No);
+        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe dj !\nVoulez-vous l'craser ?", QMessageBox::Yes | QMessageBox::No);
 
         if (reponse == QMessageBox::No)
             return false;
@@ -136,24 +136,29 @@ void Affichage::ouvrir()
 void Affichage::loadImag()
 {
     image = new QImage(nomFichier, 0);
+    rgbimg.imgexe = image;
 }
 
 void Affichage::printImag()
 {
-    RgbImage rgbimg(image);
-    //printf("%d,%d,%d\n", rgbimg[0][0].b, rgbimg[0][0].g, rgbimg[0][0].r);
-
-    monPixmap = QPixmap::fromImage(*image, Qt::AutoColor);
-    scene->addPixmap(monPixmap);
+    scene->addPixmap(QPixmap::fromImage(*image));
     vue->setScene(scene);
     fichier_save = nomFichier;
     setFixedSize(image->width(),image->height());
     is_save = true;
 }
 
+
+void Affichage::refresh()
+{
+    scene->clear();
+    scene->addPixmap(QPixmap::fromImage(*image));
+    vue->update();
+    repaint();
+}
+
 void Affichage::flou()
 {
-
 }
 
 void Affichage::histogramme()
@@ -161,8 +166,14 @@ void Affichage::histogramme()
 
 }
 
+void Affichage::loadfusion()
+{
+    new Fusiondialog(this, rgbimg);
+}
+
 void Affichage::quitter()
 {
     if(testSauvegarde())
         qApp->quit();
 }
+

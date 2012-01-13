@@ -17,7 +17,7 @@ class PixEditor : public QMainWindow
         QMenuBar *barre_menu;
         QMenu *menu_fichier, *menu_outils ,*histo_menu;
         QAction *nouveau_action, *ouvrir_action, *sauver_action, *sauversous_action, *quitter_action;
-        QAction *flou_action, *histo_action;
+        QAction *flou_action, *histo_action, *fusion_action;
 
 
     public:

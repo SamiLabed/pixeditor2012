@@ -46,11 +46,16 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
+    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(flou()));
+
+    fusion_action = new QAction(tr("&F&usion"), this);
+    fusion_action->setStatusTip(tr("Fusionner l'image avec une autre"));
+    QObject::connect(fusion_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadfusion()));
 
     menu_outils = new QMenu(tr("F&iltre"), this);
     menu_outils->addAction(flou_action);
+    menu_outils->addAction(fusion_action);
 
     //histogramme
     histo_action = new QAction(tr("&Rouge"),this);
@@ -71,3 +76,4 @@ PixEditor::~PixEditor()
 {
 
 }
+
