@@ -29,6 +29,8 @@ class Affichage : public QWidget
         QString nomFichier;
         FlouDialog dialogFlou;
 
+        RgbImage rgbimg;
+
     public:
         Affichage();
         void loadImag();
@@ -43,7 +45,9 @@ class Affichage : public QWidget
         bool testSauvegarde();
         void quitter();
         void flou();
+        void loadfusion();
         void histogramme();
+        void refresh();
 
     signals:
 };

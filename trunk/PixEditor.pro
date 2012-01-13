@@ -5,14 +5,16 @@ QT += core \
     gui
 TARGET = PixEditor
 TEMPLATE = app
-SOURCES += Affichage.cpp \
-    PixEditor.cpp \
+SOURCES += \
     Main.cpp \
     colorpicker.cpp \
     Floudialog.cpp \
     Flou.cpp \
     gris.cpp \
-    Fusion.cpp
+    Fusion.cpp \
+    Affichage.cpp \
+    PixEditor.cpp \
+    Fusiondialog.cpp
 
 HEADERS += PixEditor.h \
     Affichage.h \
@@ -21,4 +23,5 @@ HEADERS += PixEditor.h \
     Floudialog.h \
     Flou.h \
     gris.h \
-    Fusion.h
+    Fusion.h \
+    Fusiondialog.h

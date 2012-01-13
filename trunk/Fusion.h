@@ -5,13 +5,11 @@
 class Fusion
 {
 public:
-    Fusion(RgbImage img1, RgbImage img2);
+    Fusion();
     virtual ~Fusion();
-    void calculFusion(float p);
+    void calculFusion(RgbImage imgbase, RgbImage imgchoisi, float p);
 protected:
 private:
-    RgbImage imgbase;
-    RgbImage imgchoisi;
 };
 
 #endif // FUSION_H
