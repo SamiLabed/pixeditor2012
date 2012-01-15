@@ -14,7 +14,8 @@ SOURCES += \
     Fusion.cpp \
     Affichage.cpp \
     PixEditor.cpp \
-    Fusiondialog.cpp
+    Fusiondialog.cpp \
+    Histogramme.cpp
 
 HEADERS += PixEditor.h \
     Affichage.h \
@@ -24,4 +25,11 @@ HEADERS += PixEditor.h \
     Flou.h \
     gris.h \
     Fusion.h \
-    Fusiondialog.h
+    Fusiondialog.h \
+    Histogramme.h
+
+
+
+
+
+

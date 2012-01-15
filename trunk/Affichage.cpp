@@ -4,6 +4,7 @@
 #include "Image.h"
 #include "Flou.h"
 #include "Fusiondialog.h"
+#include "Histogramme.h"
 
 Affichage::Affichage()
 {
@@ -161,9 +162,37 @@ void Affichage::flou()
 {
 }
 
-void Affichage::histogramme()
+void Affichage::histogrammeR()
 {
+    color = Qt::red;
+    h = new Histogramme(rgbimg, image->width(), image->height(), color);
+    histoPixmap = new QPixmap(300,400);
+    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
+    h->drawHisto(histoPixmap, histo, color);
+    labelR.setPixmap(*histoPixmap);
+    labelR.show();
+}
 
+void Affichage::histogrammeG()
+{
+    color = Qt::green;
+    h = new Histogramme(rgbimg, image->width(), image->height(), color);
+    histoPixmap = new QPixmap(300,400);
+    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
+    h->drawHisto(histoPixmap, histo, color);
+    labelG.setPixmap(*histoPixmap);
+    labelG.show();
+}
+
+void Affichage::histogrammeB()
+{
+    color = Qt::blue;
+    h = new Histogramme(rgbimg, image->width(), image->height(), color);
+    histoPixmap = new QPixmap(300,400);
+    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
+    h->drawHisto(histoPixmap, histo, color);
+    labelB.setPixmap(*histoPixmap);
+    labelB.show();
 }
 
 void Affichage::loadfusion()

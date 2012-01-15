@@ -21,7 +21,7 @@
 
 class FlouDialog : public QWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
     private:
         float taille;
         //Flou f;

@@ -11,13 +11,16 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QImage>
+#include <QLabel>
 #include <QPixmap>
 #include <QRgb>
+#include <QColor>
 #include <Floudialog.h>
+#include "Histogramme.h"
 
 class Affichage : public QWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
     private:
         QGraphicsScene *scene;
         QGraphicsView *vue;
@@ -30,6 +33,15 @@ class Affichage : public QWidget
         FlouDialog dialogFlou;
 
         RgbImage rgbimg;
+
+        QPixmap *histoPixmap;
+        QLabel labelR;
+        QLabel labelG;
+        QLabel labelB;
+        Histogramme *h;
+        QColor color;
+
+        int* histo;
 
     public:
         Affichage();
@@ -46,7 +58,9 @@ class Affichage : public QWidget
         void quitter();
         void flou();
         void loadfusion();
-        void histogramme();
+        void histogrammeR();
+        void histogrammeG();
+        void histogrammeB();
         void refresh();
 
     signals:

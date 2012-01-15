@@ -7,18 +7,18 @@
 #include <QMenuBar>
 #include <QProgressBar>
 #include <QStatusBar>
+#include <QColor>
 #include "Affichage.h"
 
 class PixEditor : public QMainWindow
 {
-    Q_OBJECT;
+    Q_OBJECT
     private:
         Affichage widgetcentral;
         QMenuBar *barre_menu;
         QMenu *menu_fichier, *menu_outils ,*histo_menu;
         QAction *nouveau_action, *ouvrir_action, *sauver_action, *sauversous_action, *quitter_action;
-        QAction *flou_action, *histo_action, *fusion_action;
-
+        QAction *flou_action, *histoR_action, *histoG_action, *histoB_action, *fusion_action;
 
     public:
         PixEditor(QWidget *parent = 0);

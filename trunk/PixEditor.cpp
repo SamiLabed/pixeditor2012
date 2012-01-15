@@ -46,7 +46,7 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
+    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(flou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);
@@ -58,10 +58,19 @@ void PixEditor::addMenu()
     menu_outils->addAction(fusion_action);
 
     //histogramme
-    histo_action = new QAction(tr("&Rouge"),this);
-    QObject::connect(histo_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogramme()));
     histo_menu=new QMenu(tr("&Histogramme"),this);
-    histo_menu->addAction(histo_action);
+
+    histoR_action = new QAction(tr("&Rouge"),this);
+    QObject::connect(histoR_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeR()));
+    histo_menu->addAction(histoR_action);
+
+    histoG_action = new QAction(tr("&Vert"),this);
+    QObject::connect(histoG_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeG()));
+    histo_menu->addAction(histoG_action);
+
+    histoB_action = new QAction(tr("&Bleu"),this);
+    QObject::connect(histoB_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeB()));
+    histo_menu->addAction(histoB_action);
 
 
     barre_menu = new QMenuBar(this);
