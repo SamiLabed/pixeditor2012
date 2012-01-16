@@ -11,27 +11,31 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QImage>
-#include <QLabel>
-#include <QPixmap>
 #include <QRgb>
-#include <QColor>
-#include <Floudialog.h>
+#include <QPixmap>
+#include <QLabel>
+#include <QColorDialog>
+#include "Image.h"
+#include "Gris.h"
 #include "Histogramme.h"
+
+
+
 
 class Affichage : public QWidget
 {
-    Q_OBJECT
+    Q_OBJECT;
     private:
         QGraphicsScene *scene;
         QGraphicsView *vue;
         QVBoxLayout *position_fenetre;
 
+        QImage *image;
         QPixmap monPixmap;
-        bool is_save;
+        bool is_save,picolor_action,decouper_action;
         QString fichier_save;
         QString nomFichier;
-        FlouDialog dialogFlou;
-
+        QColorDialog dialog;
         RgbImage rgbimg;
 
         QPixmap *histoPixmap;
@@ -41,13 +45,18 @@ class Affichage : public QWidget
         Histogramme *h;
         QColor color;
 
-        int* histo;
+        int *histo;
 
     public:
         Affichage();
         void loadImag();
         void printImag();
-        QImage *image;
+
+
+    protected:
+        void    mouseMoveEvent(QMouseEvent *event);
+        void    mousePressEvent(QMouseEvent *event);
+        void    mouseReleaseEvent(QMouseEvent *event);
 
     public slots:
         void nouveau();
@@ -56,11 +65,13 @@ class Affichage : public QWidget
         bool sauvegarderSous();
         bool testSauvegarde();
         void quitter();
-        void flou();
+        void gris();
+        void loadflou();
         void loadfusion();
         void histogrammeR();
         void histogrammeG();
         void histogrammeB();
+        void pixelcolor();
         void refresh();
 
     signals:

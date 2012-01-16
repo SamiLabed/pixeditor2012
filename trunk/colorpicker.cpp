@@ -1,32 +1,46 @@
 #include "colorpicker.h"
+#include <stdio.h>
 
-ColorPicker::ColorPicker(Affichage *plateau)
+Colorpicker::Colorpicker(Affichage *aff)
 {
-    plateauAffichage=plateau;
-
+    plateauAffichage=aff;
+    dialog.open();// = QColorDialog(QWidget *parent=0);
+    show();
 
 }
 
-void ColorPicker::mouseMoveEvent(QMouseEvent *event)
+void Colorpicker::mouseMoveEvent(QMouseEvent *event)
 {
-
-}
-void ColorPicker::mousePressEvent(QMouseEvent *event)
-{
-    double x = event->pos().x();
-    double y = event->pos().y();
+    //double x = event->pos().x();
+    //double y = event->pos().y();
 
     //double height_principale= plateauAffichage->height();
     //double wight_principale= plateauAffichage->width();
 
-    QRgb pixel =plateauAffichage->image->pixel((int)x,(int)y);
-    QColor color = QColor::fromRgb(pixel);
-    if(color.isValid())
-        colorDialog = QColorDialog::getColor(color,this);
-        //colorDialog.setCurrentColor(color);
+    //QRgb pixel =plateauAffichage->image->pixel((int)x,(int)y);
+    //QColor color = QColor::fromRgb(pixel);
+    //if(color.isValid())
+        //colorDialog = QColorDialog::getColor(color,this);
+    //    dialog.setCurrentColor(color);
 
 }
-void ColorPicker::mouseReleaseEvent(QMouseEvent *event)
+void Colorpicker::mousePressEvent(QMouseEvent *event)
+{
+
+    //double x = event->pos().x();
+    //double y = event->pos().y();
+
+    //double height_principale= plateauAffichage->height();
+    //double wight_principale= plateauAffichage->width();
+
+    //QRgb pixel =plateauAffichage->image->pixel((int)x,(int)y);
+    //QColor color = QColor::fromRgb(pixel);
+    //if(color.isValid())
+    //    //colorDialog = QColorDialog::getColor(color,this);
+    //    dialog.setCurrentColor(color);
+
+}
+void Colorpicker::mouseReleaseEvent(QMouseEvent *event)
 {
 
 }

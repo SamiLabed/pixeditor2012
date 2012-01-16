@@ -2,6 +2,7 @@
 #define IMAGE_H
 #include <QImage>
 #include <stdio.h>
+
 template<class T> class Image
 {
 private:
@@ -20,9 +21,8 @@ public:
     }
     void operator=(QImage* img)
     {
-        imgexe = img;
+        imgexe=img;
     }
-
     inline T* operator[](const int rowIndx)
     {
         // renvoi l'index du debut de la ligne numero rowIndx
@@ -32,7 +32,7 @@ public:
 
 typedef struct
 {
-    unsigned char b,g,r, alpha;
+    unsigned char b,g,r,alpha;
 } RgbPixel;
 
 typedef Image<RgbPixel> RgbImage;

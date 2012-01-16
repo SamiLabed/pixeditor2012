@@ -14,16 +14,18 @@
 #include <QImage>
 #include <QRgb>
 #include "Image.h"
+#include "Flou.h"
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include "Affichage.h"
 
 
 class FlouDialog : public QWidget
 {
-    Q_OBJECT
+    Q_OBJECT;
     private:
-        float taille;
+
         //Flou f;
         //IplImage *imgfloat;
         int height,width;
@@ -32,10 +34,13 @@ class FlouDialog : public QWidget
         QSpinBox * spinBox;
         QVBoxLayout *layout;
         QFormLayout *formaLayout;
+        RgbImage rgbbase;
+        Affichage* affiche_flou;
 
     public:
-        FlouDialog();
+        FlouDialog(Affichage *affiche,RgbImage imbase);
         int getTaille();
+        float taille;
 
     public slots:
         void quitter();

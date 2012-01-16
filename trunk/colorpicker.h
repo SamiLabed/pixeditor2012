@@ -4,22 +4,25 @@
 #include <QtGui/QWidget>
 #include <QtGui/QPen>
 #include <QColorDialog>
-#include <Affichage.h>
+
 #include<QMouseEvent>
 #include<QColor>
+#include "Affichage.h"
 
-class ColorPicker : public QWidget
+
+class Colorpicker : public QWidget
 {
+    Q_OBJECT;
     public:
-        ColorPicker();
-        ColorPicker(Affichage *plateauAffichage);
+        Colorpicker(Affichage *aff);
 
     private:
         Affichage *plateauAffichage;
-        QColor  colorSelected;
-        QImage  image;
-        QPoint  positionCursseur;
+        //QColor  colorSelected;
+        //QImage  image;
+        //QPoint  positionCursseur;
         QColor colorDialog;
+        QColorDialog dialog;
 
     protected:
         void    mouseMoveEvent(QMouseEvent *event);

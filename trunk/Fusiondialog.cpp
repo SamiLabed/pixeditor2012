@@ -1,5 +1,5 @@
 #include "Fusiondialog.h"
-#include <stdio.h>
+
 
 Fusiondialog::Fusiondialog(Affichage* aff, RgbImage rgb)
 {
@@ -63,3 +63,5 @@ void Fusiondialog::openfile()
     texte_fichier->setText(tmp);
     imgfusion = new QImage(tmp);
 }
+
+
