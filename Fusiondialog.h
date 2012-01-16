@@ -48,3 +48,4 @@ public slots:
 };
 
 #endif // FUSIONDIALOG_H
+

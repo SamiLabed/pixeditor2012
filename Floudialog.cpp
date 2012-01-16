@@ -1,7 +1,11 @@
 #include "Floudialog.h"
 
-FlouDialog::FlouDialog()
+FlouDialog::FlouDialog(Affichage *affiche,RgbImage imbase)
 {
+    setFixedSize(300,150);
+
+    affiche_flou=affiche;
+    rgbbase=imbase;
 
     t = new QLineEdit;
 
@@ -17,18 +21,42 @@ FlouDialog::FlouDialog()
     layout->addLayout(formaLayout);
 
     valider = new QPushButton("valider");
-    QObject::connect(valider, SIGNAL(clicked()), this, SLOT(quitter()));
+    QObject::connect(valider, SIGNAL(clicked()), this, SLOT(flou()));
     layout->addWidget(valider);
 
     //layout->addWidget(spinBox);
     layout->addWidget(valider);
     setLayout(layout);
+    show();
 
 }
 
 void FlouDialog::flou()
 {
-    show();
+    if(rgbbase.imgexe != NULL)
+    {
+        int imgheight=rgbbase.imgexe->height();
+        int imgwidth=rgbbase.imgexe->width();
+
+        float taille = spinBox->value();
+        Flou *f = new Flou(taille,imgheight,imgwidth);
+
+        int i,j;
+        for(i=0; i < imgheight; i++)
+        {
+            for(j=0; j < imgwidth; j++)
+            {
+                f->calculMoy(i,j,rgbbase);
+            }
+        }
+        affiche_flou->refresh();
+
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+    quitter();
 
 }
 
@@ -36,8 +64,8 @@ void FlouDialog::flou()
 void FlouDialog::quitter()
 {
     //prin->setTailleFlou(spinBox->value());
-    taille = spinBox->value();
-    this->setVisible(false);
-    //this->close();
+    //taille = spinBox->value();
+    //this->setVisible(false);
+    this->close();
 
 }

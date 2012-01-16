@@ -1,5 +1,4 @@
-#include "gris.h"
-#include <QImage>
+#include "Gris.h"
 
 Gris::Gris(int ml, int mc)
 {
@@ -25,3 +24,4 @@ Gris::Gris(int ml, int mc)
             }
 
     }
+

@@ -5,6 +5,7 @@ PixEditor::PixEditor(QWidget *parent)
 {
 
     addMenu();
+    //picker_action
     setCentralWidget(&widgetcentral);
 
 }
@@ -46,16 +47,22 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou Ã  l'image"));
-    QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(flou()));
+    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
+    QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);
     fusion_action->setStatusTip(tr("Fusionner l'image avec une autre"));
     QObject::connect(fusion_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadfusion()));
 
+    gris_action = new QAction(tr("&Gris"),this);
+    gris_action->setStatusTip("Appliquer un gris l'image");
+    QObject::connect(gris_action,SIGNAL(triggered()),&widgetcentral,SLOT(gris()));
+
+
     menu_outils = new QMenu(tr("F&iltre"), this);
     menu_outils->addAction(flou_action);
     menu_outils->addAction(fusion_action);
+    menu_outils->addAction(gris_action);
 
     //histogramme
     histo_menu=new QMenu(tr("&Histogramme"),this);
@@ -73,10 +80,17 @@ void PixEditor::addMenu()
     histo_menu->addAction(histoB_action);
 
 
+    //color_picker
+    picker_action = new QAction(tr("&Picolor"),this);
+    QObject::connect(picker_action, SIGNAL(triggered()), &widgetcentral, SLOT(pixelcolor()));
+    color_picker = new QMenu(tr("&Picolor"),this);
+    color_picker->addAction(picker_action);
+
     barre_menu = new QMenuBar(this);
     barre_menu->addMenu(menu_fichier);
     barre_menu->addMenu(menu_outils);
     barre_menu->addMenu(histo_menu);
+    barre_menu->addMenu(color_picker);
 
     setMenuBar(barre_menu);
 }
@@ -85,4 +99,3 @@ PixEditor::~PixEditor()
 {
 
 }
-

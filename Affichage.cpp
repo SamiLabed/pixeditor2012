@@ -1,17 +1,19 @@
 #include "Affichage.h"
 #include <iostream>
 #include <stdio.h>
-#include "Image.h"
 #include "Flou.h"
 #include "Fusiondialog.h"
-#include "Histogramme.h"
+#include "Floudialog.h"
+#include "colorpicker.h"
+
 
 Affichage::Affichage()
 {
     vue = new QGraphicsView();
     position_fenetre = new QVBoxLayout(this);
     position_fenetre->addWidget(vue);
-
+    picolor_action=true;
+    decouper_action=false;
     fichier_save = "";
     is_save = true;
     nouveau();
@@ -56,7 +58,7 @@ bool Affichage::sauvegarderSous()
 
     /*if(QFile::exists(fichier))
     {
-        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe dj !\nVoulez-vous l'craser ?", QMessageBox::Yes | QMessageBox::No);
+        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe déjà !\nVoulez-vous l'écraser ?", QMessageBox::Yes | QMessageBox::No);
 
         if (reponse == QMessageBox::No)
             return false;
@@ -142,13 +144,16 @@ void Affichage::loadImag()
 
 void Affichage::printImag()
 {
+    //RgbImage rgbimg(image);
+    //printf("%d,%d,%d\n", rgbimg[0][0].b, rgbimg[0][0].g, rgbimg[0][0].r);
+
+    //monPixmap = QPixmap::fromImage(*image, Qt::AutoColor);
     scene->addPixmap(QPixmap::fromImage(*image));
     vue->setScene(scene);
     fichier_save = nomFichier;
-    setFixedSize(image->width(),image->height());
+    setFixedSize(image->height(),image->width());
     is_save = true;
 }
-
 
 void Affichage::refresh()
 {
@@ -158,8 +163,65 @@ void Affichage::refresh()
     repaint();
 }
 
-void Affichage::flou()
+
+
+
+void Affichage::loadflou()
 {
+    if(image !=NULL)
+    {
+        new FlouDialog(this,rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+}
+
+
+void Affichage::loadfusion()
+{
+    new Fusiondialog(this, rgbimg);
+}
+
+void Affichage::gris()
+{
+    Gris* imggris = new Gris(image->height(),image->width());
+    imggris->calNivGris(rgbimg);
+    refresh();
+}
+
+void Affichage::pixelcolor()
+{
+    //picolor_action = !picolor_action;
+    if(picolor_action==true)
+        dialog.open();
+    //new Colorpicker(this);
+
+
+}
+
+void Affichage::mouseMoveEvent(QMouseEvent *event)
+{
+
+}
+
+void Affichage::mousePressEvent(QMouseEvent *event)
+{
+    double x = event->pos().x();
+    double y = event->pos().y();
+    //QColorDialog dialog;
+    QRgb pixel =image->pixel((int)x,(int)y);
+    QColor color = QColor::fromRgb(pixel);
+    if(color.isValid() && picolor_action)
+        //colorDialog = QColorDialog::getColor(color,this);
+        dialog.setCurrentColor(color);
+
+}
+
+void Affichage::mouseReleaseEvent(QMouseEvent *event)
+{
+
 }
 
 void Affichage::histogrammeR()
@@ -195,14 +257,8 @@ void Affichage::histogrammeB()
     labelB.show();
 }
 
-void Affichage::loadfusion()
-{
-    new Fusiondialog(this, rgbimg);
-}
-
 void Affichage::quitter()
 {
     if(testSauvegarde())
         qApp->quit();
 }
-

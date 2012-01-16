@@ -49,6 +49,7 @@ void Flou::calculMoy(int x, int y, RgbImage img)
             resR += img[i][j].r * val;
         }
     }
+
     img[x][y].b = resB;
     img[x][y].g = resG;
     img[x][y].r = resR;
