@@ -7,7 +7,7 @@ class Flou
 {
 public:
     Flou (float t, int ml, int mc);
-    void calculMoy(int x, int y, RgbImage img);
+    void calculMoy(int x, int y, RgbImage img, RgbImage img2);
     virtual ~Flou();
 protected:
 private:

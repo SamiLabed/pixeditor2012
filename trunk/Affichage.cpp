@@ -5,7 +5,13 @@
 #include "Fusiondialog.h"
 #include "Floudialog.h"
 #include "colorpicker.h"
-
+#include "Convolution.h"
+#include "Histogramme.h"
+#include "Gauss.h"
+#include "Gradientdialog.h"
+#include "Rehaussdialog.h"
+#include "Persodialog.h"
+#include "Accentdialog.h"
 
 Affichage::Affichage()
 {
@@ -58,7 +64,7 @@ bool Affichage::sauvegarderSous()
 
     /*if(QFile::exists(fichier))
     {
-        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe déjà !\nVoulez-vous l'écraser ?", QMessageBox::Yes | QMessageBox::No);
+        int reponse = QMessageBox::question(this, "Attention", "Ce fichier existe dj !\nVoulez-vous l'craser ?", QMessageBox::Yes | QMessageBox::No);
 
         if (reponse == QMessageBox::No)
             return false;
@@ -168,14 +174,7 @@ void Affichage::refresh()
 
 void Affichage::loadflou()
 {
-    if(image !=NULL)
-    {
-        new FlouDialog(this,rgbimg);
-    }
-    else
-    {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
-    }
+    new FlouDialog(this,rgbimg);
 }
 
 
@@ -184,10 +183,53 @@ void Affichage::loadfusion()
     new Fusiondialog(this, rgbimg);
 }
 
+void Affichage::loadrehausseur()
+{
+    new RehaussDialog(this, rgbimg);
+}
+
+void Affichage::loaddetection()
+{
+    int i,j=0;
+    QImage* qtmp = new QImage(*rgbimg.imgexe);
+    RgbImage tmp;
+    tmp.imgexe = qtmp;
+
+    Convolution conv(image->height(), image->width());
+    conv.buildLaplace();
+
+    for(i=0; i < image->height(); i++)
+    {
+        for(j=0; j < image->width(); j++)
+        {
+            conv.calculRehausse(i, j, rgbimg, tmp);
+
+        }
+    }
+
+    refresh();
+}
+
+
+void Affichage:: loadgradient()
+{
+    new GradientDialog(this, rgbimg);
+}
+
+void Affichage::loadperso()
+{
+    new Persodialog(this, rgbimg);
+}
+
+void Affichage::loadaccentuer()
+{
+    new AccentDialog(this, rgbimg);
+}
+
 void Affichage::gris()
 {
-    Gris* imggris = new Gris(image->height(),image->width());
-    imggris->calNivGris(rgbimg);
+    Gris imggris(image->height(),image->width());
+    imggris.calNivGris(rgbimg);
     refresh();
 }
 
@@ -210,13 +252,16 @@ void Affichage::mousePressEvent(QMouseEvent *event)
 {
     double x = event->pos().x();
     double y = event->pos().y();
-    //QColorDialog dialog;
-    QRgb pixel =image->pixel((int)x,(int)y);
-    QColor color = QColor::fromRgb(pixel);
-    if(color.isValid() && picolor_action)
-        //colorDialog = QColorDialog::getColor(color,this);
-        dialog.setCurrentColor(color);
 
+    printf("%.2f,%.2f\n", x, y);
+    int r = rgbimg[(int) x][(int) y].r;
+    int g = rgbimg[(int) x][(int) y].g;
+    int b = rgbimg[(int) x][(int) y].b;
+    int alpha = rgbimg[(int) x][(int) y].alpha;
+
+    QColor color(r, g, b, alpha);
+    if(color.isValid() && picolor_action)
+        dialog.setCurrentColor(color);
 }
 
 void Affichage::mouseReleaseEvent(QMouseEvent *event)
