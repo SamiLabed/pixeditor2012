@@ -16,7 +16,7 @@
 #include <QLabel>
 #include <QColorDialog>
 #include "Image.h"
-#include "Gris.h"
+#include "gris.h"
 #include "Histogramme.h"
 
 
@@ -68,6 +68,11 @@ class Affichage : public QWidget
         void gris();
         void loadflou();
         void loadfusion();
+        void loadrehausseur();
+        void loaddetection();
+        void loadgradient();
+        void loadperso();
+        void loadaccentuer();
         void histogrammeR();
         void histogrammeG();
         void histogrammeB();

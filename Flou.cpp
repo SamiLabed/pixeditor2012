@@ -13,7 +13,7 @@ Flou::~Flou()
 {
 }
 
-void Flou::calculMoy(int x, int y, RgbImage img)
+void Flou::calculMoy(int x, int y, RgbImage img, RgbImage img2)
 {
     int i, j;
     float borneMiniLig, borneMiniCol, borneMaxiLig, borneMaxiCol;
@@ -44,9 +44,9 @@ void Flou::calculMoy(int x, int y, RgbImage img)
     {
         for(j= borneMiniCol; j <= borneMaxiCol; j++)
         {
-            resB += img[i][j].b * val;
-            resG += img[i][j].g * val;
-            resR += img[i][j].r * val;
+            resB += img2[i][j].b * val;
+            resG += img2[i][j].g * val;
+            resR += img2[i][j].r * val;
         }
     }
 

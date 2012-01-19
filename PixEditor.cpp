@@ -47,7 +47,7 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
+    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);
@@ -58,11 +58,37 @@ void PixEditor::addMenu()
     gris_action->setStatusTip("Appliquer un gris l'image");
     QObject::connect(gris_action,SIGNAL(triggered()),&widgetcentral,SLOT(gris()));
 
+    rehaussement_action = new QAction(tr("&Rehaussement de contraste"),this);
+    rehaussement_action->setStatusTip("Rehausser le contraste");
+    QObject::connect(rehaussement_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadrehausseur()));
+
+    detection_action = new QAction(tr("&Detecter les contours"),this);
+    detection_action->setStatusTip("Detection de contour");
+    QObject::connect(detection_action,SIGNAL(triggered()),&widgetcentral,SLOT(loaddetection()));
+
+    gradient_action = new QAction(tr("&Gradient"),this);
+    gradient_action->setStatusTip("Gradient");
+    QObject::connect(gradient_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadgradient()));
+
+    perso_action = new QAction(tr("&Personnaliser"),this);
+    perso_action->setStatusTip("Personnaliser le filtre");
+    QObject::connect(perso_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadperso()));
+
+    accent_action = new QAction(tr("&Accentuer"),this);
+    accent_action->setStatusTip("Accentuer l'image");
+    QObject::connect(accent_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadaccentuer()));
 
     menu_outils = new QMenu(tr("F&iltre"), this);
     menu_outils->addAction(flou_action);
     menu_outils->addAction(fusion_action);
     menu_outils->addAction(gris_action);
+    menu_outils->addAction(rehaussement_action);
+    menu_outils->addAction(detection_action);
+    menu_outils->addAction(gradient_action);
+    menu_outils->addAction(perso_action);
+    menu_outils->addAction(accent_action);
+
+
 
     //histogramme
     histo_menu=new QMenu(tr("&Histogramme"),this);
@@ -99,3 +125,4 @@ PixEditor::~PixEditor()
 {
 
 }
+

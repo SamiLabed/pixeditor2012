@@ -43,9 +43,8 @@ class FlouDialog : public QWidget
         float taille;
 
     public slots:
-        void quitter();
         void flou();
-        //void flou(IplImage *imgfloat,int h,int w);
+
 };
 
 #endif // FLOUDIALOG_H
