@@ -5,7 +5,6 @@ PixEditor::PixEditor(QWidget *parent)
 {
 
     addMenu();
-    //picker_action
     setCentralWidget(&widgetcentral);
 
 }
@@ -108,15 +107,23 @@ void PixEditor::addMenu()
 
     //color_picker
     picker_action = new QAction(tr("&Picolor"),this);
-    QObject::connect(picker_action, SIGNAL(triggered()), &widgetcentral, SLOT(pixelcolor()));
+    QObject::connect(picker_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(pixelcolor()));
     color_picker = new QMenu(tr("&Picolor"),this);
     color_picker->addAction(picker_action);
+
+    //selection
+    menu_selection = new QMenu(tr("&Selection"),this);
+    selection_action=new QAction(tr("&selection"),this);
+    QObject::connect(selection_action, SIGNAL(triggered()), &widgetcentral, SLOT(selection()));
+    menu_selection->addAction(selection_action);
 
     barre_menu = new QMenuBar(this);
     barre_menu->addMenu(menu_fichier);
     barre_menu->addMenu(menu_outils);
     barre_menu->addMenu(histo_menu);
     barre_menu->addMenu(color_picker);
+    barre_menu->addMenu(menu_selection);
+
 
     setMenuBar(barre_menu);
 }
