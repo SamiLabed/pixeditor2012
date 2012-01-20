@@ -5,8 +5,7 @@ QT += core \
     gui
 TARGET = PixEditor
 TEMPLATE = app
-SOURCES += \
-    Main.cpp \
+SOURCES += Main.cpp \
     colorpicker.cpp \
     Floudialog.cpp \
     Flou.cpp \
@@ -21,8 +20,8 @@ SOURCES += \
     Gradientdialog.cpp \
     Rehaussdialog.cpp \
     Persodialog.cpp \
-    Accentdialog.cpp
-
+    Accentdialog.cpp \
+    Affichagelabel.cpp
 HEADERS += PixEditor.h \
     Affichage.h \
     Image.h \
@@ -38,4 +37,5 @@ HEADERS += PixEditor.h \
     Gradientdialog.h \
     Rehaussdialog.h \
     Persodialog.h \
-    Accentdialog.h
+    Accentdialog.h \
+    Affichagelabel.h
