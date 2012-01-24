@@ -4,8 +4,12 @@ PixEditor::PixEditor(QWidget *parent)
     : QMainWindow(parent)
 {
 
+    //widgetcentral = new Affichage(affichage);
+    //affichage = new AffichageLabel(widgetcentral);
     addMenu();
+    //set
     setCentralWidget(&widgetcentral);
+
 
 }
 
@@ -46,7 +50,7 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
+    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);
@@ -87,8 +91,6 @@ void PixEditor::addMenu()
     menu_outils->addAction(perso_action);
     menu_outils->addAction(accent_action);
 
-
-
     //histogramme
     histo_menu=new QMenu(tr("&Histogramme"),this);
 
@@ -107,14 +109,14 @@ void PixEditor::addMenu()
 
     //color_picker
     picker_action = new QAction(tr("&Picolor"),this);
-    QObject::connect(picker_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(pixelcolor()));
+    QObject::connect(picker_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(pixelColor()));
     color_picker = new QMenu(tr("&Picolor"),this);
     color_picker->addAction(picker_action);
 
-    //selection
+    //Selection
     menu_selection = new QMenu(tr("&Selection"),this);
     selection_action=new QAction(tr("&selection"),this);
-    QObject::connect(selection_action, SIGNAL(triggered()), &widgetcentral, SLOT(selection()));
+    QObject::connect(selection_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(selection()));
     menu_selection->addAction(selection_action);
 
     barre_menu = new QMenuBar(this);
@@ -124,7 +126,6 @@ void PixEditor::addMenu()
     barre_menu->addMenu(color_picker);
     barre_menu->addMenu(menu_selection);
 
-
     setMenuBar(barre_menu);
 }
 
@@ -132,4 +133,3 @@ PixEditor::~PixEditor()
 {
 
 }
-
