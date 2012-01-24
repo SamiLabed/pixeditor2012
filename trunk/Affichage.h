@@ -1,6 +1,7 @@
 #ifndef WIDGETPRINCIPAL_H
 #define WIDGETPRINCIPAL_H
 
+
 #include <math.h>
 #include <QApplication>
 #include <QWidget>
@@ -16,8 +17,11 @@
 #include <QLabel>
 #include <QColorDialog>
 #include "Image.h"
-#include "gris.h"
+#include "Gris.h"
 #include "Histogramme.h"
+
+
+//class Affichagelabel;
 #include "Affichagelabel.h"
 
 
@@ -26,17 +30,18 @@ class Affichage : public QWidget
 {
     Q_OBJECT;
     private:
-        //QGraphicsScene *scene;
-        //QGraphicsView *vue;
+        QGraphicsScene *scene;
+        QGraphicsView *vue;
         QVBoxLayout *position_fenetre;
 
-        QImage *image;
+        QLabel *imageLabel;
+        //QImage *image;
         QPixmap monPixmap;
         bool is_save;
         QString fichier_save;
         QString nomFichier;
         QColorDialog dialog;
-        RgbImage rgbimg;
+        //RgbImage rgbimg;
 
         QPixmap *histoPixmap;
         QLabel labelR;
@@ -44,19 +49,23 @@ class Affichage : public QWidget
         QLabel labelB;
         Histogramme *h;
         QColor color;
-
         int *histo;
 
     public:
         Affichage();
         AffichageLabel *affichage;
+        QImage *image;
         void loadImag();
         void printImag();
+        void setRgbimg(RgbImage *rgbImg);
         void setLabel(AffichageLabel *monlabel);
+        void setimag(QImage *img);
+        RgbImage rgbimg;
 
 
 
     protected:
+        //void    paintEvent(QPaintEvent *event);
         //void    mouseMoveEvent(QMouseEvent *event);
         //void    mousePressEvent(QMouseEvent *event);
         //void    mouseReleaseEvent(QMouseEvent *event);
@@ -80,7 +89,6 @@ class Affichage : public QWidget
         void histogrammeG();
         void histogrammeB();
         void refresh();
-
     signals:
 };
 

@@ -1,10 +1,12 @@
 #include "Affichage.h"
+//#include "Affichagelabel.h"
 #include <iostream>
 #include <stdio.h>
 #include "Flou.h"
 #include "Fusiondialog.h"
 #include "Floudialog.h"
 #include "colorpicker.h"
+#include <QStylePainter>
 #include "Convolution.h"
 #include "Histogramme.h"
 #include "Gauss.h"
@@ -12,19 +14,27 @@
 #include "Rehaussdialog.h"
 #include "Persodialog.h"
 #include "Accentdialog.h"
-#include "Affichagelabel.h"
-
 
 Affichage::Affichage()
 {
+    //imageLabel = new QLabel(this);
     affichage = new AffichageLabel(this);
+    //affichage=aff;
     position_fenetre = new QVBoxLayout(this);
     position_fenetre->addWidget(affichage);
+
     //picolor_action=false;
     //decouper_action=false;
+    //affichage->setaffichage(this);
     fichier_save = "";
     is_save = true;
     nouveau();
+
+}
+
+void Affichage::setimag(QImage *img)
+{
+    rgbimg.imgexe=img;
 }
 
 void Affichage::setLabel(AffichageLabel *monlabel)
@@ -66,7 +76,6 @@ bool Affichage::sauvegarderSous()
     if(fichier.isEmpty())
         return false;
 
-
     fichier_save = fichier;
     sauvegarder();
 
@@ -96,50 +105,40 @@ void Affichage::ouvrir()
         if(fichier != "")
         {
             nomFichier=fichier;
-            nouveau();
             loadImag();
             printImag();
-
         }
     }
 }
 
 void Affichage::loadImag()
 {
-    //image = new QImage(nomFichier, 0);
-    //rgbimg.imgexe = image;
-    affichage->load(rgbimg);
     image = new QImage(nomFichier, 0);
     rgbimg.imgexe = image;
+    //affichage->rgbimg=rgbimg;
     affichage->load(rgbimg);
+}
+
+void Affichage::setRgbimg(RgbImage *rgbImg)
+{
+    rgbimg=*rgbImg;
 }
 
 void Affichage::printImag()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
-    this->setFixedSize(image->width(),image->height());
     affichage->setFixedSize(image->width(),image->height());
     affichage->move(0,0);
+    affichage->load(rgbimg);
     fichier_save = nomFichier;
     is_save = true;
-
-
-    //scene->addPixmap(QPixmap::fromImage(*image));
-    //vue->setScene(scene);
-    //fichier_save = nomFichier;
-    //setFixedSize(image->height(),image->width());
-    //is_save = true;
 }
 
 void Affichage::refresh()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
+    //affichage->rgbimg=rgbimg;
     affichage->load(rgbimg);
-
-    //scene->clear();
-    //scene->addPixmap(QPixmap::fromImage(*image));
-    //vue->update();
-    //repaint();
 }
 
 
@@ -147,8 +146,6 @@ void Affichage::refresh()
 
 void Affichage::loadflou()
 {
-    //new FlouDialog(this,rgbimg);
-
     if(image !=NULL)
     {
         new FlouDialog(this,rgbimg);
@@ -183,7 +180,6 @@ void Affichage::loaddetection()
     QImage* qtmp = new QImage(*rgbimg.imgexe);
     RgbImage tmp;
     tmp.imgexe = qtmp;
-
     Convolution conv(image->height(), image->width());
     conv.buildLaplace();
 
@@ -192,12 +188,11 @@ void Affichage::loaddetection()
         for(j=0; j < image->width(); j++)
         {
             conv.calculRehausse(i, j, rgbimg, tmp);
-
         }
     }
-
     refresh();
 }
+
 
 void Affichage:: loadgradient()
 {
@@ -213,6 +208,7 @@ void Affichage::loadaccentuer()
 {
     new AccentDialog(this, rgbimg);
 }
+
 
 void Affichage::histogrammeR()
 {
