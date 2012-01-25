@@ -14,6 +14,8 @@
 #include "Rehaussdialog.h"
 #include "Persodialog.h"
 #include "Accentdialog.h"
+#include "Redimension.h"
+
 
 Affichage::Affichage()
 {
@@ -115,6 +117,8 @@ void Affichage::loadImag()
 {
     image = new QImage(nomFichier, 0);
     rgbimg.imgexe = image;
+    rgbimgold.imgexe=image;
+    //rgbimgold
     //affichage->rgbimg=rgbimg;
     affichage->load(rgbimg);
 }
@@ -124,12 +128,30 @@ void Affichage::setRgbimg(RgbImage *rgbImg)
     rgbimg=*rgbImg;
 }
 
+void Affichage::setoldrgbimg(RgbImage *rgbImg)
+{
+    rgbimgold=*rgbImg;
+    rgbimgold.imgexe=rgbImg->imgexe;
+    //rgbimgold.imgexe=rgbImg.imgexe;
+    imageold=rgbImg->imgexe;
+}
+
+void Affichage:: precedent()
+{
+    rgbimg.imgexe=rgbimgold.imgexe;
+    image=rgbimgold.imgexe;
+    setRgbimg(&rgbimgold);
+    printImag();
+}
+
 void Affichage::printImag()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
     affichage->setFixedSize(image->width(),image->height());
-    affichage->move(0,0);
+    //affichage->move(0,0);
     affichage->load(rgbimg);
+    imageold=image;
+    setoldrgbimg(&rgbimg);
     fichier_save = nomFichier;
     is_save = true;
 }
@@ -138,6 +160,8 @@ void Affichage::refresh()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
     //affichage->rgbimg=rgbimg;
+    //setoldrgbimg(&rgbimg);
+    imageold=image;
     is_save = false;
     affichage->load(rgbimg);
 }
@@ -149,6 +173,7 @@ void Affichage::loadflou()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new FlouDialog(this,rgbimg);
     }
     else
@@ -163,6 +188,7 @@ void Affichage::loadfusion()
 
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new Fusiondialog(this, rgbimg);
     }
     else
@@ -176,6 +202,7 @@ void Affichage::gris()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         Gris* imggris = new Gris(image->height(),image->width());
         imggris->calNivGris(rgbimg);
         refresh();
@@ -191,6 +218,7 @@ void Affichage::loadrehausseur()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new RehaussDialog(this, rgbimg);
     }
     else
@@ -206,6 +234,7 @@ void Affichage::loaddetection()
 
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
 
         Gris* imggris = new Gris(image->height(),image->width());
         int i,j=0;
@@ -236,6 +265,7 @@ void Affichage:: loadgradient()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new GradientDialog(this, rgbimg);
     }
     else
@@ -249,6 +279,7 @@ void Affichage::loadperso()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new Persodialog(this, rgbimg);
     }
     else
@@ -262,6 +293,7 @@ void Affichage::loadaccentuer()
 {
     if(nomFichier !=NULL)
     {
+        setoldrgbimg(&rgbimg);
         new AccentDialog(this, rgbimg);
     }
     else
@@ -304,6 +336,27 @@ void Affichage::histogrammeB()
     labelB.setPixmap(*histoPixmap);
     labelB.show();
 }
+
+void Affichage::redimension()
+{
+
+     if(nomFichier !=NULL)
+    {
+         setoldrgbimg(&rgbimg);
+       new Redimension(this);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
+    //ReDim* imgredim = new ReDim(this);
+
+
+
+    //refresh();
+}
+
 
 void Affichage::quitter()
 {

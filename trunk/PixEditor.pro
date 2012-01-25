@@ -21,7 +21,8 @@ SOURCES += Affichage.cpp \
     Convolution.cpp \
     Rehaussdialog.cpp \
     Persodialog.cpp \
-    Accentdialog.cpp
+    Accentdialog.cpp \
+    Redimension.cpp
 HEADERS += PixEditor.h \
     Affichage.h \
     Image.h \
@@ -38,4 +39,5 @@ HEADERS += PixEditor.h \
     Convolution.h \
     Rehaussdialog.h \
     Persodialog.h \
-    Accentdialog.h
+    Accentdialog.h \
+    Redimension.h
