@@ -17,7 +17,10 @@ class PixEditor : public QMainWindow
     private:
         Affichage widgetcentral;
         AffichageLabel *affichage;
+        QDockWidget *dock;
         //QScrollArea *scrollArea;
+        QStatusBar *barreEtat ;
+        QToolBar *toolBarFichier;
         QMenuBar *barre_menu;
         QMenu *menu_fichier, *menu_outils ,*histo_menu,*color_picker,*menu_selection;
         QAction *nouveau_action, *ouvrir_action, *sauver_action, *sauversous_action, *quitter_action;
@@ -30,6 +33,8 @@ class PixEditor : public QMainWindow
     public:
         PixEditor(QWidget *parent = 0);
         ~PixEditor();
+        void addock();
+        void addtoolbar();
         void addMenu();
         void addStatutBar();
 

@@ -2,7 +2,6 @@
 #define IMAGE_H
 #include <QImage>
 #include <stdio.h>
-#include <math.h>
 
 template<class T> class Image
 {

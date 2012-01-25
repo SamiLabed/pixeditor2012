@@ -6,11 +6,72 @@ PixEditor::PixEditor(QWidget *parent)
 
     //widgetcentral = new Affichage(affichage);
     //affichage = new AffichageLabel(widgetcentral);
+    barreEtat=statusBar();
     addMenu();
-    //set
+    addock();
+    addtoolbar();
     setCentralWidget(&widgetcentral);
 
 
+
+}
+
+void PixEditor::addock()
+{
+    QWidget *contenuDock = new QWidget;
+    dock= new QDockWidget("Palette",this);
+    dock->setWidget(contenuDock);
+    addDockWidget(Qt::LeftDockWidgetArea,dock);
+    QPushButton *selection = new QPushButton("Selection");
+    QPushButton *gris = new QPushButton("Gris");
+    QPushButton *flou = new QPushButton("Flou");
+    QPushButton *contour = new QPushButton("Contour");
+    QPushButton *fusion = new QPushButton("Fusion");
+    QPushButton *contraste = new QPushButton("Contraste");
+    QPushButton *gradient = new QPushButton("Gradient");
+    QPushButton *personaliser = new QPushButton("Personaliser");
+    QPushButton *accentuer = new QPushButton("Accentuer");
+    QPushButton *pixelColor = new QPushButton("PixelColor");
+
+    connect(selection,SIGNAL(clicked()),widgetcentral.affichage, SLOT(selection()));
+    connect(gris,SIGNAL(clicked()),&widgetcentral, SLOT(gris()));
+    connect(flou,SIGNAL(clicked()),&widgetcentral, SLOT(loadflou()));
+    connect(contour,SIGNAL(clicked()),&widgetcentral, SLOT(loaddetection()));
+    connect(fusion,SIGNAL(clicked()),&widgetcentral, SLOT(loadfusion()));
+    connect(contraste,SIGNAL(clicked()),&widgetcentral, SLOT(loadrehausseur()));
+    connect(gradient,SIGNAL(clicked()),&widgetcentral, SLOT(loadgradient()));
+    connect(personaliser,SIGNAL(clicked()),&widgetcentral, SLOT(ladperso()));
+    connect(accentuer,SIGNAL(clicked()),&widgetcentral, SLOT(loadaccentuer()));
+    connect(pixelColor,SIGNAL(clicked()),widgetcentral.affichage, SLOT(pixelColor()));
+
+
+
+    QVBoxLayout *dockLayout = new QVBoxLayout;
+    dockLayout->addWidget(selection);
+    dockLayout->addWidget(gris);
+    dockLayout->addWidget(flou);
+    dockLayout->addWidget(contour);
+    dockLayout->addWidget(fusion);
+    dockLayout->addWidget(contraste);
+    dockLayout->addWidget(gradient);
+    dockLayout->addWidget(personaliser);
+    dockLayout->addWidget(accentuer);
+    dockLayout->addWidget(pixelColor);
+
+    contenuDock->setLayout(dockLayout);
+}
+
+void PixEditor::addtoolbar()
+{
+
+    toolBarFichier = this->addToolBar(tr("Fichier"));
+    toolBarFichier->addAction(quitter_action);
+    toolBarFichier->addSeparator();
+    toolBarFichier->addAction(ouvrir_action);
+    toolBarFichier->addSeparator();
+    toolBarFichier->addAction(sauversous_action);
+    toolBarFichier->addSeparator();
+    toolBarFichier->addAction(sauver_action);
 }
 
 void PixEditor::addMenu()
@@ -18,27 +79,32 @@ void PixEditor::addMenu()
 
     // Fichier
     nouveau_action = new QAction(tr("&Nouveau"), this);
+    nouveau_action->setIcon(QIcon("../window-new-3.png"));
     nouveau_action->setShortcut(tr("Ctrl+N"));
     nouveau_action->setStatusTip(tr("Nouvelle image"));
     QObject::connect(nouveau_action, SIGNAL(triggered()), &widgetcentral, SLOT(nouveau()));
 
     ouvrir_action = new QAction(tr("&Ouvrir"), this);
     ouvrir_action->setShortcut(tr("Ctrl+O"));
+    ouvrir_action->setIcon(QIcon("../OpenButton.png"));
     ouvrir_action->setStatusTip(tr("Charger une image"));
     QObject::connect(ouvrir_action, SIGNAL(triggered()), &widgetcentral, SLOT(ouvrir()));
 
     sauver_action = new QAction(tr("&Sauvegarder"), this);
     sauver_action->setShortcut(tr("Ctrl+S"));
+    sauver_action->setIcon(QIcon("../enregistrer.png"));
     sauver_action->setStatusTip(tr("Sauvegarder l'image"));
     QObject::connect(sauver_action, SIGNAL(triggered()), &widgetcentral, SLOT(sauvegarder()));
 
     sauversous_action = new QAction(tr("S&auvegarder sous..."), this);
     sauversous_action->setShortcut(tr("Ctrl+Shift+S"));
+    sauversous_action->setIcon(QIcon("../enregistrer-sous.png"));
     sauversous_action->setStatusTip(tr("Sauvegarder l'image sous..."));
     connect(sauversous_action, SIGNAL(triggered()), &widgetcentral, SLOT(sauvegarderSous()));
 
     quitter_action = new QAction(tr("&Quitter"), this);
     quitter_action->setStatusTip(tr("Quitter le programme"));
+    quitter_action->setIcon(QIcon("../icone-infos.png"));
     QObject::connect(quitter_action, SIGNAL(triggered()), &widgetcentral, SLOT(quitter()));
 
     menu_fichier = new QMenu(tr("&Fichier"), this);
@@ -51,6 +117,7 @@ void PixEditor::addMenu()
     // Filtre
     flou_action = new QAction(tr("&Flou"), this);
     flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
+    flou_action->setIcon(QIcon("../flou.gif"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);

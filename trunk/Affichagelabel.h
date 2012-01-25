@@ -22,6 +22,7 @@ class AffichageLabel : public QLabel
         void imgselect();
         void setaffichage(Affichage *aff);
 
+
     private:
         RgbImage rgbimg;
         bool picolor_action,decouper_action;

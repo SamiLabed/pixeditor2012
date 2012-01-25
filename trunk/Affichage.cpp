@@ -138,6 +138,7 @@ void Affichage::refresh()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
     //affichage->rgbimg=rgbimg;
+    is_save = false;
     affichage->load(rgbimg);
 }
 
@@ -146,7 +147,7 @@ void Affichage::refresh()
 
 void Affichage::loadflou()
 {
-    if(image !=NULL)
+    if(nomFichier !=NULL)
     {
         new FlouDialog(this,rgbimg);
     }
@@ -159,54 +160,115 @@ void Affichage::loadflou()
 
 void Affichage::loadfusion()
 {
-    new Fusiondialog(this, rgbimg);
+
+    if(nomFichier !=NULL)
+    {
+        new Fusiondialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 void Affichage::gris()
 {
-    Gris* imggris = new Gris(image->height(),image->width());
-    imggris->calNivGris(rgbimg);
-    refresh();
+    if(nomFichier !=NULL)
+    {
+        Gris* imggris = new Gris(image->height(),image->width());
+        imggris->calNivGris(rgbimg);
+        refresh();
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 void Affichage::loadrehausseur()
 {
-    new RehaussDialog(this, rgbimg);
+    if(nomFichier !=NULL)
+    {
+        new RehaussDialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
+
 }
 
 void Affichage::loaddetection()
 {
-    int i,j=0;
-    QImage* qtmp = new QImage(*rgbimg.imgexe);
-    RgbImage tmp;
-    tmp.imgexe = qtmp;
-    Convolution conv(image->height(), image->width());
-    conv.buildLaplace();
 
-    for(i=0; i < image->height(); i++)
+    if(nomFichier !=NULL)
     {
-        for(j=0; j < image->width(); j++)
+
+        Gris* imggris = new Gris(image->height(),image->width());
+        int i,j=0;
+        QImage* qtmp = new QImage(*rgbimg.imgexe);
+        RgbImage tmp;
+        tmp.imgexe = qtmp;
+        Convolution conv(image->height(), image->width());
+        conv.buildLaplace();
+
+        for(i=0; i < image->height(); i++)
         {
-            conv.calculRehausse(i, j, rgbimg, tmp);
+            for(j=0; j < image->width(); j++)
+            {
+                conv.calculRehausse(i, j, rgbimg, tmp);
+            }
         }
+        refresh();
     }
-    refresh();
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 
 void Affichage:: loadgradient()
 {
-    new GradientDialog(this, rgbimg);
+    if(nomFichier !=NULL)
+    {
+        new GradientDialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 void Affichage::loadperso()
 {
-    new Persodialog(this, rgbimg);
+    if(nomFichier !=NULL)
+    {
+        new Persodialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 void Affichage::loadaccentuer()
 {
-    new AccentDialog(this, rgbimg);
+    if(nomFichier !=NULL)
+    {
+        new AccentDialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
 }
 
 
