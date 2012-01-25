@@ -55,12 +55,15 @@ class Affichage : public QWidget
         Affichage();
         AffichageLabel *affichage;
         QImage *image;
+        QImage *imageold;
         void loadImag();
         void printImag();
         void setRgbimg(RgbImage *rgbImg);
         void setLabel(AffichageLabel *monlabel);
         void setimag(QImage *img);
+        void setoldrgbimg(RgbImage *rgbImg);
         RgbImage rgbimg;
+        RgbImage rgbimgold;
 
 
 
@@ -89,6 +92,8 @@ class Affichage : public QWidget
         void histogrammeG();
         void histogrammeB();
         void refresh();
+        void redimension();
+        void precedent();
     signals:
 };
 

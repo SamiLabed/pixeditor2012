@@ -10,7 +10,14 @@ PixEditor::PixEditor(QWidget *parent)
     addMenu();
     addock();
     addtoolbar();
-    setCentralWidget(&widgetcentral);
+
+    QScrollArea *defilement = new QScrollArea();
+    setCentralWidget(defilement);
+    defilement->setWidget(&widgetcentral);
+    defilement->setWidgetResizable(true);
+
+
+    //setCentralWidget(&widgetcentral);
 
 
 
@@ -186,12 +193,22 @@ void PixEditor::addMenu()
     QObject::connect(selection_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(selection()));
     menu_selection->addAction(selection_action);
 
+    //redimension
+
+    redim_action = new QAction(tr("&ReDimension"),this);
+    redim_action->setStatusTip("Appliquer le redimensionnement à l'image");
+    QObject::connect(redim_action,SIGNAL(triggered()),&widgetcentral,SLOT(redimension()));
+
+    menu_redimension = new QMenu (tr ("&Redimension"), this);
+    menu_redimension->addAction(redim_action);
+
     barre_menu = new QMenuBar(this);
     barre_menu->addMenu(menu_fichier);
     barre_menu->addMenu(menu_outils);
     barre_menu->addMenu(histo_menu);
     barre_menu->addMenu(color_picker);
     barre_menu->addMenu(menu_selection);
+    barre_menu->addMenu(menu_redimension);
 
     setMenuBar(barre_menu);
 }
