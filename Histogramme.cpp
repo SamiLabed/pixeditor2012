@@ -23,9 +23,9 @@ int* Histogramme::calculHisto(RgbImage img, int width, int height, QColor color)
 
     if (color == Qt::red)
     {
-        for (x=0; x<height; x++)
+        for (x=0; x<width; x++)
         {
-            for (y=0; y<width; y++)
+            for (y=0; y<height; y++)
             {
                 tmp = img[x][y].r;
                 temp = (int)tmp;
@@ -37,9 +37,9 @@ int* Histogramme::calculHisto(RgbImage img, int width, int height, QColor color)
     }
     else if (color == Qt::green)
     {
-        for (x=0; x<height; x++)
+        for (x=0; x<width; x++)
         {
-            for (y=0; y<width; y++)
+            for (y=0; y<height; y++)
             {
                 tmp = img[x][y].g;
                 temp = (int)tmp;
@@ -51,9 +51,9 @@ int* Histogramme::calculHisto(RgbImage img, int width, int height, QColor color)
     }
     else if (color == Qt::blue)
     {
-        for (x=0; x<height; x++)
+        for (x=0; x<width; x++)
         {
-            for (y=0; y<width; y++)
+            for (y=0; y<height; y++)
             {
                 tmp = img[x][y].b;
                 temp = (int)tmp;

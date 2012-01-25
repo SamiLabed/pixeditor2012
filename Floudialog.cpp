@@ -33,25 +33,39 @@ FlouDialog::FlouDialog(Affichage *affiche,RgbImage imbase)
 
 void FlouDialog::flou()
 {
-    QImage* qtmp = new QImage(*rgbbase.imgexe);
-    RgbImage tmp;
-    tmp.imgexe = qtmp;
-
-
-    int imgheight=rgbbase.imgexe->height();
-    int imgwidth=rgbbase.imgexe->width();
-
-    float taille = spinBox->value();
-    Flou *f = new Flou(taille,imgheight,imgwidth);
-
-    int i,j;
-    for(i=0; i < imgheight; i++)
+    if(rgbbase.imgexe != NULL)
     {
-        for(j=0; j < imgwidth; j++)
+        int imgheight=rgbbase.imgexe->height();
+        int imgwidth=rgbbase.imgexe->width();
+
+        float taille = spinBox->value();
+        Flou *f = new Flou(taille,imgheight,imgwidth);
+
+        int i,j;
+        for(i=0; i < imgheight; i++)
         {
-            f->calculMoy(i,j,rgbbase, tmp);
+            for(j=0; j < imgwidth; j++)
+            {
+                f->calculMoy(i,j,rgbbase);
+            }
         }
+        affiche_flou->refresh();
+
     }
-    affiche_flou->refresh();
-    close();
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+    quitter();
+
+}
+
+
+void FlouDialog::quitter()
+{
+    //prin->setTailleFlou(spinBox->value());
+    //taille = spinBox->value();
+    //this->setVisible(false);
+    this->close();
+
 }

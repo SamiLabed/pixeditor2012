@@ -27,7 +27,7 @@ class GradientDialog : public QWidget
 {
     Q_OBJECT
 public:
-    GradientDialog(Affichage* aff, RgbImage rgb);
+    GradientDialog(Affichage *aff, RgbImage rgb);
     QGridLayout *grid;
     QLabel *labfiltre;
     QSpinBox *spin;
