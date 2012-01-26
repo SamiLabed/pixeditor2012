@@ -3,21 +3,16 @@
 PixEditor::PixEditor(QWidget *parent)
     : QMainWindow(parent)
 {
-
-    //widgetcentral = new Affichage(affichage);
-    //affichage = new AffichageLabel(widgetcentral);
     barreEtat=statusBar();
     addMenu();
     addock();
     addtoolbar();
 
     QScrollArea *defilement = new QScrollArea();
+    defilement->setMinimumSize(QSize(500,500));
     setCentralWidget(defilement);
     defilement->setWidget(&widgetcentral);
     defilement->setWidgetResizable(true);
-
-
-    //setCentralWidget(&widgetcentral);
 
 
 
@@ -39,6 +34,7 @@ void PixEditor::addock()
     QPushButton *personaliser = new QPushButton("Personaliser");
     QPushButton *accentuer = new QPushButton("Accentuer");
     QPushButton *pixelColor = new QPushButton("PixelColor");
+
 
     connect(selection,SIGNAL(clicked()),widgetcentral.affichage, SLOT(selection()));
     connect(gris,SIGNAL(clicked()),&widgetcentral, SLOT(gris()));
@@ -72,6 +68,8 @@ void PixEditor::addtoolbar()
 {
 
     toolBarFichier = this->addToolBar(tr("Fichier"));
+    toolBarFichier->addAction(precedent_action);
+    toolBarFichier->addSeparator();
     toolBarFichier->addAction(quitter_action);
     toolBarFichier->addSeparator();
     toolBarFichier->addAction(ouvrir_action);
@@ -79,12 +77,19 @@ void PixEditor::addtoolbar()
     toolBarFichier->addAction(sauversous_action);
     toolBarFichier->addSeparator();
     toolBarFichier->addAction(sauver_action);
+    toolBarFichier->addSeparator();
+    toolBarFichier->addAction(picker_action);
 }
 
 void PixEditor::addMenu()
 {
+    //Fichier
+    precedent_action=new QAction(tr("&Precedent"),this);
+    precedent_action->setIcon(QIcon("../precedent.jpg"));
+    precedent_action->setStatusTip(tr("Precedent"));
+    QObject::connect(precedent_action,SIGNAL(triggered()),&widgetcentral,SLOT(precedent()));
 
-    // Fichier
+    //
     nouveau_action = new QAction(tr("&Nouveau"), this);
     nouveau_action->setIcon(QIcon("../window-new-3.png"));
     nouveau_action->setShortcut(tr("Ctrl+N"));
@@ -115,6 +120,7 @@ void PixEditor::addMenu()
     QObject::connect(quitter_action, SIGNAL(triggered()), &widgetcentral, SLOT(quitter()));
 
     menu_fichier = new QMenu(tr("&Fichier"), this);
+    menu_fichier->addAction(precedent_action);
     menu_fichier->addAction(nouveau_action);
     menu_fichier->addAction(ouvrir_action);
     menu_fichier->addAction(sauver_action);
@@ -122,7 +128,7 @@ void PixEditor::addMenu()
     menu_fichier->addAction(quitter_action);
 
     // Filtre
-    flou_action = new QAction(tr("&Flou"), this);
+    flou_action = new QAction(tr("&F&lou"), this);
     flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
     flou_action->setIcon(QIcon("../flou.gif"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
@@ -155,7 +161,7 @@ void PixEditor::addMenu()
     accent_action->setStatusTip("Accentuer l'image");
     QObject::connect(accent_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadaccentuer()));
 
-    menu_outils = new QMenu(tr("F&iltre"), this);
+    menu_outils = new QMenu(tr("&F&iltre"), this);
     menu_outils->addAction(flou_action);
     menu_outils->addAction(fusion_action);
     menu_outils->addAction(gris_action);
@@ -182,24 +188,26 @@ void PixEditor::addMenu()
 
 
     //color_picker
-    picker_action = new QAction(tr("&Picolor"),this);
+    picker_action = new QAction(tr("&P&i&xelColor"),this);
+    picker_action->setStatusTip("Pixel valeur");
+    picker_action->setIcon(QIcon("../pixelcolor.jpg"));
     QObject::connect(picker_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(pixelColor()));
     color_picker = new QMenu(tr("&Picolor"),this);
     color_picker->addAction(picker_action);
 
     //Selection
-    menu_selection = new QMenu(tr("&Selection"),this);
+    menu_selection = new QMenu(tr("&Se&lection"),this);
     selection_action=new QAction(tr("&selection"),this);
     QObject::connect(selection_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(selection()));
     menu_selection->addAction(selection_action);
 
     //redimension
 
-    redim_action = new QAction(tr("&ReDimension"),this);
+    redim_action = new QAction(tr("&R&eDimension"),this);
     redim_action->setStatusTip("Appliquer le redimensionnement à l'image");
     QObject::connect(redim_action,SIGNAL(triggered()),&widgetcentral,SLOT(redimension()));
 
-    menu_redimension = new QMenu (tr ("&Redimension"), this);
+    menu_redimension = new QMenu (tr ("&R&e&dimension"), this);
     menu_redimension->addAction(redim_action);
 
     barre_menu = new QMenuBar(this);

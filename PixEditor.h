@@ -27,7 +27,7 @@ class PixEditor : public QMainWindow
         QAction *flou_action,  *histoR_action, *histoG_action, *histoB_action,*picker_action
                 ,*fusion_action,*gris_action,*selection_action,
                 *rehaussement_action, *detection_action, *gradient_action
-                , *perso_action, *accent_action , *redim_action;
+                , *perso_action, *accent_action , *redim_action,*precedent_action;
 
 
     public:

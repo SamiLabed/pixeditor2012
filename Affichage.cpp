@@ -19,15 +19,10 @@
 
 Affichage::Affichage()
 {
-    //imageLabel = new QLabel(this);
+
     affichage = new AffichageLabel(this);
-    //affichage=aff;
     position_fenetre = new QVBoxLayout(this);
     position_fenetre->addWidget(affichage);
-
-    //picolor_action=false;
-    //decouper_action=false;
-    //affichage->setaffichage(this);
     fichier_save = "";
     is_save = true;
     nouveau();
@@ -50,6 +45,8 @@ void Affichage::nouveau()
     {
         image = new QImage;
         fichier_save = "";
+        nomFichier="";
+        refresh();
         is_save = true;
     }
 }
@@ -117,7 +114,7 @@ void Affichage::loadImag()
 {
     image = new QImage(nomFichier, 0);
     rgbimg.imgexe = image;
-    rgbimgold.imgexe=image;
+    //rgbimgold.imgexe=image;
     //rgbimgold
     //affichage->rgbimg=rgbimg;
     affichage->load(rgbimg);
@@ -130,18 +127,70 @@ void Affichage::setRgbimg(RgbImage *rgbImg)
 
 void Affichage::setoldrgbimg(RgbImage *rgbImg)
 {
-    rgbimgold=*rgbImg;
-    rgbimgold.imgexe=rgbImg->imgexe;
-    //rgbimgold.imgexe=rgbImg.imgexe;
-    imageold=rgbImg->imgexe;
+
+    QImage *tmpImage=new QImage(image->width(), image->height(),QImage::Format_RGB32);
+    //RgbImage tmp;
+    rgbimgold.imgexe =tmpImage;
+
+    int i,j=0;
+    for(i=0;i<image->height();i++){
+        for(j=0;j<image->width();j++){
+            rgbimgold[i][j].b=rgbimg[i][j].b;
+            rgbimgold[i][j].g=rgbimg[i][j].g;
+            rgbimgold[i][j].r=rgbimg[i][j].r;
+        }
+    }
+
 }
 
 void Affichage:: precedent()
 {
-    rgbimg.imgexe=rgbimgold.imgexe;
-    image=rgbimgold.imgexe;
-    setRgbimg(&rgbimgold);
-    printImag();
+    if(nomFichier !=NULL || nomFichier.compare("") <0)
+    {
+        int i,j=0;
+        if(image->height() != rgbimgold.imgexe->height())
+        {
+
+            QImage *tmpImage=new QImage(rgbimgold.imgexe->width(),
+                                        rgbimgold.imgexe->height(),QImage::Format_RGB32);
+            //RgbImage tmp;
+            rgbimg.imgexe =tmpImage;
+
+
+            for(i=0;i<tmpImage->height();i++){
+                for(j=0;j<tmpImage->width();j++){
+                    rgbimg[i][j].b=rgbimgold[i][j].b;
+                    rgbimg[i][j].g=rgbimgold[i][j].g;
+                    rgbimg[i][j].r=rgbimgold[i][j].r;
+                }
+            }
+            image=tmpImage;
+            printImag();
+
+        }else
+        {
+
+            for(i=0;i<image->height();i++){
+                for(j=0;j<image->width();j++){
+                    rgbimg[i][j].b=rgbimgold[i][j].b;
+                    rgbimg[i][j].g=rgbimgold[i][j].g;
+                    rgbimg[i][j].r=rgbimgold[i][j].r;
+                }
+            }
+
+            rgbimg.imgexe=rgbimgold.imgexe;
+            image=rgbimgold.imgexe;
+            printImag();
+
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
+
+
 }
 
 void Affichage::printImag()
@@ -150,18 +199,13 @@ void Affichage::printImag()
     affichage->setFixedSize(image->width(),image->height());
     //affichage->move(0,0);
     affichage->load(rgbimg);
-    imageold=image;
-    setoldrgbimg(&rgbimg);
     fichier_save = nomFichier;
-    is_save = true;
+    is_save = false;
 }
 
 void Affichage::refresh()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
-    //affichage->rgbimg=rgbimg;
-    //setoldrgbimg(&rgbimg);
-    imageold=image;
     is_save = false;
     affichage->load(rgbimg);
 }

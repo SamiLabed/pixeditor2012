@@ -30,30 +30,41 @@ void AffichageLabel::setaffichage(Affichage *aff)
 void AffichageLabel::imgselect()
 {
 
-    int x0=origin.x();
-    int y0=origin.y();
-    int xF=fin.x();
-    int yF=fin.y();
-    int w=xF-x0;
-    int h=yF-y0;
+    if(affichage->nomFichier !=NULL || affichage->nomFichier.compare("")<0)
+    {
 
-    QImage *image=new QImage(w, h,QImage::Format_RGB32);
-    RgbImage tmp;
-    tmp.imgexe =image;
+        affichage->setoldrgbimg(&affichage->rgbimg);
+        int x0=origin.x();
+        int y0=origin.y();
+        int xF=fin.x();
+        int yF=fin.y();
+        int w=xF-x0;
+        int h=yF-y0;
 
-    int i,j=0;
-    for(i=0;i<h;i++){
-        for(j=0;j<w;j++){
-            tmp[i][j].b=affichage->rgbimg[i+y0][j+x0].b;
-            tmp[i][j].g=affichage->rgbimg[i+y0][j+x0].g;
-            tmp[i][j].r=affichage->rgbimg[i+y0][j+x0].r;
+        QImage *image=new QImage(w, h,QImage::Format_RGB32);
+        RgbImage tmp;
+        tmp.imgexe =image;
+
+        int i,j=0;
+        for(i=0;i<h;i++){
+            for(j=0;j<w;j++){
+                tmp[i][j].b=affichage->rgbimg[i+y0][j+x0].b;
+                tmp[i][j].g=affichage->rgbimg[i+y0][j+x0].g;
+                tmp[i][j].r=affichage->rgbimg[i+y0][j+x0].r;
+            }
         }
+        affichage->rgbimg.imgexe=tmp.imgexe;
+        affichage->image=tmp.imgexe;
+        //affichage->setimag(tmp.imgexe);
+        affichage->setRgbimg(&tmp);
+        affichage->printImag();
+
+
     }
-    affichage->rgbimg.imgexe=tmp.imgexe;
-    affichage->image=tmp.imgexe;
-    //affichage->setimag(tmp.imgexe);
-    affichage->setRgbimg(&tmp);
-    affichage->printImag();
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
 
 }
 

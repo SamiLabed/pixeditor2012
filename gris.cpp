@@ -11,9 +11,9 @@ Gris::Gris(int ml, int mc)
     int i, j;
     float res;
 
-        for(i =0 ; i <=maxcol ; i++)
+        for(i =0 ; i <image.imgexe->height() ; i++)
             {
-        for(j =0 ; j <=maxlig ; j++)
+        for(j =0 ; j <image.imgexe->width() ; j++)
                 {
                    res = (image[i][j].b * 0.114) + (image[i][j].g * 0.587) + (image[i][j].r * 0.299);
 
