@@ -19,9 +19,6 @@
 #include "Image.h"
 #include "Gris.h"
 #include "Histogramme.h"
-
-
-//class Affichagelabel;
 #include "Affichagelabel.h"
 
 
@@ -35,13 +32,11 @@ class Affichage : public QWidget
         QVBoxLayout *position_fenetre;
 
         QLabel *imageLabel;
-        //QImage *image;
         QPixmap monPixmap;
         bool is_save;
         QString fichier_save;
-        QString nomFichier;
         QColorDialog dialog;
-        //RgbImage rgbimg;
+
 
         QPixmap *histoPixmap;
         QLabel labelR;
@@ -62,16 +57,14 @@ class Affichage : public QWidget
         void setLabel(AffichageLabel *monlabel);
         void setimag(QImage *img);
         void setoldrgbimg(RgbImage *rgbImg);
+        QString nomFichier;
         RgbImage rgbimg;
         RgbImage rgbimgold;
 
 
 
     protected:
-        //void    paintEvent(QPaintEvent *event);
-        //void    mouseMoveEvent(QMouseEvent *event);
-        //void    mousePressEvent(QMouseEvent *event);
-        //void    mouseReleaseEvent(QMouseEvent *event);
+
 
     public slots:
         void nouveau();
@@ -96,7 +89,5 @@ class Affichage : public QWidget
         void precedent();
     signals:
 };
-
-
 
 #endif // WIDGETPRINCIPAL_H
