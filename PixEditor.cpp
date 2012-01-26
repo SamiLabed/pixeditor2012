@@ -43,7 +43,7 @@ void PixEditor::addock()
     connect(fusion,SIGNAL(clicked()),&widgetcentral, SLOT(loadfusion()));
     connect(contraste,SIGNAL(clicked()),&widgetcentral, SLOT(loadrehausseur()));
     connect(gradient,SIGNAL(clicked()),&widgetcentral, SLOT(loadgradient()));
-    connect(personaliser,SIGNAL(clicked()),&widgetcentral, SLOT(ladperso()));
+    connect(personaliser,SIGNAL(clicked()),&widgetcentral, SLOT(loadperso()));
     connect(accentuer,SIGNAL(clicked()),&widgetcentral, SLOT(loadaccentuer()));
     connect(pixelColor,SIGNAL(clicked()),widgetcentral.affichage, SLOT(pixelColor()));
 

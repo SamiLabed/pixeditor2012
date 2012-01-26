@@ -15,7 +15,7 @@ Gris::Gris(int ml, int mc)
             {
         for(j =0 ; j <image.imgexe->width() ; j++)
                 {
-                   res = (image[i][j].b * 0.114) + (image[i][j].g * 0.587) + (image[i][j].r * 0.299);
+                   res = (image[i][j].b *0.2125) + (image[i][j].g * 0.7154) + (image[i][j].r * 0.0721);
 
                    image[i][j].b = (unsigned char) res;
                    image[i][j].g = (unsigned char) res;
