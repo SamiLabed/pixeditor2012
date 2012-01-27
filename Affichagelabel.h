@@ -2,8 +2,8 @@
 #define AFFICHAGELABEL_H
 
 #include <QtGui>
-#include <QLabel.h>
-#include <QImage.h>
+#include <QLabel>
+#include <QImage>
 #include <QColorDialog>
 #include <QApplication>
 #include <QWidget>

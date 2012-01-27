@@ -25,7 +25,7 @@
 
 class Affichage : public QWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
     private:
         QGraphicsScene *scene;
         QGraphicsView *vue;
@@ -37,14 +37,16 @@ class Affichage : public QWidget
         QString fichier_save;
         QColorDialog dialog;
 
-
         QPixmap *histoPixmap;
         QLabel labelR;
         QLabel labelG;
         QLabel labelB;
+        QLabel labelH;
+        QLabel labelS;
+        QLabel labelV;
         Histogramme *h;
-        QColor color;
-        int *histo;
+
+        int taille;
 
     public:
         Affichage();
@@ -81,9 +83,11 @@ class Affichage : public QWidget
         void loadgradient();
         void loadperso();
         void loadaccentuer();
-        void histogrammeR();
-        void histogrammeG();
-        void histogrammeB();
+        void histogrammeRGB();
+        void histogrammeHSV();
+        void equalize();
+        void negatif();
+        void seuillage();
         void refresh();
         void redimension();
         void precedent();

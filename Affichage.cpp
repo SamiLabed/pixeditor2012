@@ -15,6 +15,7 @@
 #include "Persodialog.h"
 #include "Accentdialog.h"
 #include "Redimension.h"
+#include "Seuildialog.h"
 
 
 Affichage::Affichage()
@@ -253,21 +254,21 @@ void Affichage::gris()
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
 }
 
 void Affichage::loadrehausseur()
 {
-    if(nomFichier !=NULL)
+    if (nomFichier != NULL)
     {
         setoldrgbimg(&rgbimg);
         new RehaussDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
 
@@ -276,7 +277,7 @@ void Affichage::loadrehausseur()
 void Affichage::loaddetection()
 {
 
-    if(nomFichier !=NULL)
+    if (nomFichier != NULL)
     {
         setoldrgbimg(&rgbimg);
 
@@ -288,9 +289,9 @@ void Affichage::loaddetection()
         Convolution conv(image->height(), image->width());
         conv.buildLaplace();
 
-        for(i=0; i < image->height(); i++)
+        for (i=0; i < image->height(); i++)
         {
-            for(j=0; j < image->width(); j++)
+            for (j=0; j < image->width(); j++)
             {
                 conv.calculRehausse(i, j, rgbimg, tmp);
             }
@@ -299,7 +300,7 @@ void Affichage::loaddetection()
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
 }
@@ -307,91 +308,137 @@ void Affichage::loaddetection()
 
 void Affichage:: loadgradient()
 {
-    if(nomFichier !=NULL)
+    if (nomFichier != NULL)
     {
         setoldrgbimg(&rgbimg);
         new GradientDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
 }
 
 void Affichage::loadperso()
 {
-    if(nomFichier !=NULL)
+    if (nomFichier != NULL)
     {
         setoldrgbimg(&rgbimg);
         new Persodialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
 }
 
 void Affichage::loadaccentuer()
 {
-    if(nomFichier !=NULL)
+    if (nomFichier != NULL)
     {
         setoldrgbimg(&rgbimg);
         new AccentDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
-
 }
 
 
-void Affichage::histogrammeR()
+void Affichage::histogrammeRGB()
 {
-    color = Qt::red;
-    h = new Histogramme(rgbimg, image->width(), image->height(), color);
-    histoPixmap = new QPixmap(300,400);
-    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
-    h->drawHisto(histoPixmap, histo, color);
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoRGB();
+    histoPixmap = new QPixmap(300, 400);
+    h->drawHistoR(histoPixmap);
     labelR.setPixmap(*histoPixmap);
     labelR.show();
-}
 
-void Affichage::histogrammeG()
-{
-    color = Qt::green;
-    h = new Histogramme(rgbimg, image->width(), image->height(), color);
-    histoPixmap = new QPixmap(300,400);
-    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
-    h->drawHisto(histoPixmap, histo, color);
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoRGB();
+    histoPixmap = new QPixmap(300, 400);
+    h->drawHistoG(histoPixmap);
     labelG.setPixmap(*histoPixmap);
     labelG.show();
-}
 
-void Affichage::histogrammeB()
-{
-    color = Qt::blue;
-    h = new Histogramme(rgbimg, image->width(), image->height(), color);
-    histoPixmap = new QPixmap(300,400);
-    histo = h->calculHisto(rgbimg, image->width(), image->height(), color);
-    h->drawHisto(histoPixmap, histo, color);
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoRGB();
+    histoPixmap = new QPixmap(300, 400);
+    h->drawHistoB(histoPixmap);
     labelB.setPixmap(*histoPixmap);
     labelB.show();
+}
+
+void Affichage::histogrammeHSV()
+{
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoHSV();
+    taille = h->getVecHSize();
+    histoPixmap = new QPixmap(taille, 400);
+    h->drawHistoH(histoPixmap);
+    labelH.setPixmap(*histoPixmap);
+    labelH.show();
+
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoHSV();
+    taille = h->getVecSSize();
+    histoPixmap = new QPixmap(taille, 400);
+    h->drawHistoS(histoPixmap);
+    labelS.setPixmap(*histoPixmap);
+    labelS.show();
+
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->calculHistoHSV();
+    taille = h->getVecVSize();
+    histoPixmap = new QPixmap(taille, 400);
+    h->drawHistoV(histoPixmap);
+    labelV.setPixmap(*histoPixmap);
+    labelV.show();
+}
+
+void Affichage::equalize()
+{
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->equalize();
+
+    refresh();
+}
+
+void Affichage::negatif()
+{
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->negatif();
+
+    refresh();
+}
+
+void Affichage::seuillage()
+{
+    if (nomFichier != NULL)
+    {
+        setoldrgbimg(&rgbimg);
+        new SeuilDialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+    }
 }
 
 void Affichage::redimension()
 {
 
-     if(nomFichier !=NULL)
+     if (nomFichier != NULL)
     {
          setoldrgbimg(&rgbimg);
        new Redimension(this);
     }
     else
     {
-        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
     }
 
     //ReDim* imgredim = new ReDim(this);
@@ -404,6 +451,6 @@ void Affichage::redimension()
 
 void Affichage::quitter()
 {
-    if(testSauvegarde())
+    if (testSauvegarde())
         qApp->quit();
 }
