@@ -85,38 +85,38 @@ void PixEditor::addMenu()
 {
     //Fichier
     precedent_action=new QAction(tr("&Precedent"),this);
-    precedent_action->setIcon(QIcon("../precedent.jpg"));
+    precedent_action->setIcon(QIcon("./icones/precedent.jpg"));
     precedent_action->setStatusTip(tr("Precedent"));
     QObject::connect(precedent_action,SIGNAL(triggered()),&widgetcentral,SLOT(precedent()));
 
     //
     nouveau_action = new QAction(tr("&Nouveau"), this);
-    nouveau_action->setIcon(QIcon("../window-new-3.png"));
+    nouveau_action->setIcon(QIcon("./icones/window-new-3.png"));
     nouveau_action->setShortcut(tr("Ctrl+N"));
     nouveau_action->setStatusTip(tr("Nouvelle image"));
     QObject::connect(nouveau_action, SIGNAL(triggered()), &widgetcentral, SLOT(nouveau()));
 
     ouvrir_action = new QAction(tr("&Ouvrir"), this);
     ouvrir_action->setShortcut(tr("Ctrl+O"));
-    ouvrir_action->setIcon(QIcon("../OpenButton.png"));
+    ouvrir_action->setIcon(QIcon("./icones/OpenButton.png"));
     ouvrir_action->setStatusTip(tr("Charger une image"));
     QObject::connect(ouvrir_action, SIGNAL(triggered()), &widgetcentral, SLOT(ouvrir()));
 
     sauver_action = new QAction(tr("&Sauvegarder"), this);
     sauver_action->setShortcut(tr("Ctrl+S"));
-    sauver_action->setIcon(QIcon("../enregistrer.png"));
+    sauver_action->setIcon(QIcon("./icones/enregistrer.png"));
     sauver_action->setStatusTip(tr("Sauvegarder l'image"));
     QObject::connect(sauver_action, SIGNAL(triggered()), &widgetcentral, SLOT(sauvegarder()));
 
     sauversous_action = new QAction(tr("S&auvegarder sous..."), this);
     sauversous_action->setShortcut(tr("Ctrl+Shift+S"));
-    sauversous_action->setIcon(QIcon("../enregistrer-sous.png"));
+    sauversous_action->setIcon(QIcon("./icones/enregistrer-sous.png"));
     sauversous_action->setStatusTip(tr("Sauvegarder l'image sous..."));
     connect(sauversous_action, SIGNAL(triggered()), &widgetcentral, SLOT(sauvegarderSous()));
 
     quitter_action = new QAction(tr("&Quitter"), this);
     quitter_action->setStatusTip(tr("Quitter le programme"));
-    quitter_action->setIcon(QIcon("../icone-infos.png"));
+    quitter_action->setIcon(QIcon("./icones/icone-infos.png"));
     QObject::connect(quitter_action, SIGNAL(triggered()), &widgetcentral, SLOT(quitter()));
 
     menu_fichier = new QMenu(tr("&Fichier"), this);
@@ -129,8 +129,8 @@ void PixEditor::addMenu()
 
     // Filtre
     flou_action = new QAction(tr("&F&lou"), this);
-    flou_action->setStatusTip(tr("Appliquer un flou à l'image"));
-    flou_action->setIcon(QIcon("../flou.gif"));
+    flou_action->setStatusTip(tr("Appliquer un flou  l'image"));
+    flou_action->setIcon(QIcon("./icones/flou.gif"));
     QObject::connect(flou_action, SIGNAL(triggered()), &widgetcentral, SLOT(loadflou()));
 
     fusion_action = new QAction(tr("&F&usion"), this);
@@ -182,11 +182,11 @@ void PixEditor::addMenu()
     QObject::connect(histoHSV_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeHSV()));
     histo_menu->addAction(histoHSV_action);
 
-    equalize_action = new QAction(tr("&Egalisé"),this);
+    equalize_action = new QAction(tr("&Egaliser"),this);
     QObject::connect(equalize_action, SIGNAL(triggered()), &widgetcentral, SLOT(equalize()));
     histo_menu->addAction(equalize_action);
 
-    negatif_action = new QAction(tr("&Négatif"),this);
+    negatif_action = new QAction(tr("&Negatif"),this);
     QObject::connect(negatif_action, SIGNAL(triggered()), &widgetcentral, SLOT(negatif()));
     histo_menu->addAction(negatif_action);
 
@@ -194,10 +194,12 @@ void PixEditor::addMenu()
     QObject::connect(seuillage_action, SIGNAL(triggered()), &widgetcentral, SLOT(seuillage()));
     histo_menu->addAction(seuillage_action);
 
+
+
     //color_picker
     picker_action = new QAction(tr("&P&i&xelColor"),this);
     picker_action->setStatusTip("Pixel valeur");
-    picker_action->setIcon(QIcon("../pixelcolor.jpg"));
+    picker_action->setIcon(QIcon("./icones/icones/pixelcolor.jpg"));
     QObject::connect(picker_action, SIGNAL(triggered()), widgetcentral.affichage, SLOT(pixelColor()));
     color_picker = new QMenu(tr("&Picolor"),this);
     color_picker->addAction(picker_action);
@@ -210,12 +212,16 @@ void PixEditor::addMenu()
 
     //redimension
 
-    redim_action = new QAction(tr("&R&eDimension"),this);
-    redim_action->setStatusTip("Appliquer le redimensionnement à l'image");
+    redim_action = new QAction(tr("&R&edimension"),this);
+    redim_action->setStatusTip("Appliquer le redimensionnement  l'image");
     QObject::connect(redim_action,SIGNAL(triggered()),&widgetcentral,SLOT(redimension()));
+    seam_action = new QAction(tr("&Seam Carving"),this);
+    seam_action->setStatusTip("Redimensionnement intelligent");
+    QObject::connect(seam_action,SIGNAL(triggered()),&widgetcentral,SLOT(loadseam()));
 
     menu_redimension = new QMenu (tr ("&R&e&dimension"), this);
     menu_redimension->addAction(redim_action);
+    menu_redimension->addAction(seam_action);
 
     barre_menu = new QMenuBar(this);
     barre_menu->addMenu(menu_fichier);
@@ -232,3 +238,4 @@ PixEditor::~PixEditor()
 {
 
 }
+

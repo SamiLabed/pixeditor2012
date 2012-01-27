@@ -25,8 +25,11 @@ void Fusion::calculFusion(RgbImage imgbase, RgbImage imgchoisi, float p)
     // L'image choisi est plus petite ou de meme taille
     if( (lig1 >= lig2) && (col1 >= col2) )
     {
+        //printf("(lig1 >= lig2) && (col1 >= col2)\n");
         difflig = (lig1 - lig2) / 2;
         diffcol = (col1 - col2) / 2;
+        //printf("difflig : %d\ndiffcol : %d\n", difflig,diffcol);
+
         for(i=0; i < lig2; i++)
         {
             for(j=0; j < col2; j++)
@@ -41,10 +44,10 @@ void Fusion::calculFusion(RgbImage imgbase, RgbImage imgchoisi, float p)
             }
         }
     }
-    else
+    else if( (lig1 < lig2) && (col1 < col2) )
     {
-        difflig = (lig2 - lig1);
-        diffcol = (col2 - col1);
+        difflig = (lig2 - lig1) / 2;
+        diffcol = (col2 - col1) / 2;
 
         for(i=0; i < lig1; i++)
         {
@@ -56,6 +59,47 @@ void Fusion::calculFusion(RgbImage imgbase, RgbImage imgchoisi, float p)
                                    + (imgchoisi[i + difflig][j + diffcol].g * pourcent2));
                 imgbase[i][j].r = ((imgbase[i][j].r * pourcent1)
                                    + (imgchoisi[i + difflig][j + diffcol].r * pourcent2));
+            }
+        }
+    }
+
+    else if( (lig1 >= lig2) && (col1 < col2) )
+    {
+        difflig = (lig1 - lig2)/2;
+        diffcol = (col2 - col1)/2;
+
+        for(i=0; i < lig2; i++)
+        {
+            for(j=0; j < col1; j++)
+            {
+                imgbase[i + difflig][j].b = ((imgbase[i + difflig][j].b * pourcent1)
+                                   + (imgchoisi[i][j + diffcol].b * pourcent2));
+                imgbase[i + difflig][j].g = ((imgbase[i + difflig][j].g * pourcent1)
+                                   + (imgchoisi[i][j + diffcol].g * pourcent2));
+                imgbase[i + difflig][j].r = ((imgbase[i + difflig][j].r * pourcent1)
+                                   + (imgchoisi[i][j + diffcol].r * pourcent2));
+            }
+        }
+    }
+    else if( (lig1 < lig2) && (col1 >= col2) )
+    {
+        //printf("(lig1 < lig2) && (col1 >= col2)\n");
+
+        difflig = (lig2 - lig1) / 2;
+        diffcol = (col1 - col2) / 2;
+        //printf("difflig : %d\ndiffcol : %d\n", difflig,diffcol);
+
+        for(i=0; i < lig1; i++)
+        {
+            for(j=0; j < col2; j++)
+            {
+                imgbase[i][j + diffcol].b = ((imgbase[i][j + diffcol].b * pourcent1)
+                                                       + (imgchoisi[i + difflig][j].b * pourcent2));
+                imgbase[i][j + diffcol].g = ((imgbase[i][j + diffcol].g * pourcent1)
+                                                       + (imgchoisi[i + difflig][j].g * pourcent2));
+                imgbase[i][j + diffcol].r = ((imgbase[i][j + diffcol].r * pourcent1)
+                                                       + (imgchoisi[i + difflig][j].r * pourcent2));
+
             }
         }
     }

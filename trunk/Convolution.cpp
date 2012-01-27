@@ -1,6 +1,5 @@
 #include "Convolution.h"
 #include "Gris.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,7 +44,8 @@ void Convolution::buildLaplace()
 void Convolution::buildGradient(int col0, int col1, int col2, float coeff)
 {
     int i,j;
-    coeff -= 11;
+    coeff -= 21;
+    coeff = fabs(coeff);
     // pour Gy
     Mx[0][0] = col0 / coeff;
     Mx[0][1] = col1 / coeff;
@@ -104,7 +104,6 @@ void Convolution::calculRehausse(int x, int y, RgbImage img, RgbImage img2)
         borneMaxiCol = maxcol - 1;
 
 
-
     for(i = borneMiniLig; i <= borneMaxiLig; i++)
     {
         for(j= borneMiniCol; j <= borneMaxiCol; j++)
@@ -119,6 +118,7 @@ void Convolution::calculRehausse(int x, int y, RgbImage img, RgbImage img2)
     resR = floor(resR + 0.5);
     resG = floor(resG + 0.5);
     resB = floor(resB + 0.5);
+
 
     // calcul du min et du max pour R
     if(resR < 0)
@@ -159,34 +159,383 @@ void Convolution::calculGradient(int x, int y, RgbImage img, RgbImage img2)
     float Gxr = 0;
     float Gyr = 0;
 
+    bool boolig = false;
+    bool boocol = false;
     borneMiniLig = x - rayon;
-    if(borneMiniLig < 0)
-        borneMiniLig = 0;
-
     borneMiniCol = y - rayon;
-    if(borneMiniCol < 0)
-        borneMiniCol = 0;
-
     borneMaxiLig = x + rayon;
-    if(borneMaxiLig >= maxlig)
-        borneMaxiLig = maxlig - 1;
-
     borneMaxiCol = y + rayon;
-    if(borneMaxiCol >= maxcol)
-        borneMaxiCol = maxcol - 1;
 
-
-    for(i = borneMiniLig; i <= borneMaxiLig; i++)
+    // On prend les lignes de la fin
+    if(borneMiniLig < 0)
     {
-        for(j= borneMiniCol; j <= borneMaxiCol; j++)
-        {
-            Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
-            Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
-            Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+        borneMiniLig = 0;
+        boolig = true;
+    }
 
-            Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
-            Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
-            Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+    if(borneMiniCol < 0)
+    {
+        borneMiniCol = 0;
+        boocol = true;
+    }
+
+    if(borneMaxiLig >= maxlig)
+    {
+        borneMaxiLig = maxlig - 1;
+        boolig = true;
+    }
+
+    if(borneMaxiCol >= maxcol)
+    {
+        borneMaxiCol = maxcol - 1;
+        boocol = true;
+    }
+
+    //Coin superieur gauche
+    if(x == 0 && y == 0)
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig + 1; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol + 1; j++)
+            {
+                if(i - borneMiniLig + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig + 1][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[0][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[0][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[0][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[0][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[0][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[0][j - borneMiniCol];
+                }
+                if(j - borneMiniCol + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol + 1];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][0];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][0];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][0];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][0];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][0];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][0];
+                }
+
+            }
+        }
+    }
+    // coin superieur droit
+    else if(x == 0 && y == maxcol - 1)
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig + 1; i++)
+        {
+            for(j= borneMiniCol - 1; j <= borneMaxiCol; j++)
+            {
+                if(i - borneMiniLig + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig + 1][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[0][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[0][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[0][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[0][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[0][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[0][j - borneMiniCol];
+                }
+
+                if(j - borneMiniCol>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][2];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][2];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][2];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][2];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][2];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][2];
+                }
+            }
+        }
+    }
+
+    // coin inferieur gauche
+    else if(x == maxlig - 1 && y == 0)
+    {
+        for(i = borneMiniLig-1; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol+1; j++)
+            {
+                if(i - borneMiniLig>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[2][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[2][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[2][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[2][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[2][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[2][j - borneMiniCol];
+                }
+
+                if(j - borneMiniCol + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol + 1];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][0];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][0];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][0];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][0];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][0];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][0];
+                }
+            }
+        }
+    }
+
+    // Coin inferieur droit
+    else if(x == maxlig - 1 && y == maxcol -1)
+    {
+        for(i = borneMiniLig-1; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol-1; j <= borneMaxiCol; j++)
+            {
+                if(i - borneMiniLig>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[2][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[2][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[2][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[2][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[2][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[2][j - borneMiniCol];
+                }
+
+                if(j - borneMiniCol>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][2];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][2];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][2];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][2];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][2];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][2];
+                }
+            }
+        }
+    }
+
+    // Premiere ligne
+    else if(x == 0)
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig+1; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol; j++)
+            {
+                if(i - borneMiniLig + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig + 1][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig + 1][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig + 1][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[0][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[0][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[0][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[0][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[0][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[0][j - borneMiniCol];
+                }
+
+            }
+        }
+    }
+    // Derniere ligne
+    else if(x == maxlig - 1)
+    {
+        for(i = borneMiniLig-1; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol; j++)
+            {
+                if(i - borneMiniLig>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[2][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[2][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[2][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[2][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[2][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[2][j - borneMiniCol];
+                }
+            }
+        }
+    }
+    // Premiere colonne
+    else if(y == 0)
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol+1; j++)
+            {
+                if(j - borneMiniCol + 1 <= 2)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol + 1];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol + 1];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol + 1];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][0];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][0];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][0];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][0];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][0];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][0];
+                }
+
+            }
+        }
+    }
+    // Derniere colonne
+    else if(y == maxcol - 1)
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol-1; j <= borneMaxiCol; j++)
+            {
+                if(j - borneMiniCol>= 0)
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][j - borneMiniCol];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+                }
+                else
+                {
+                    Gxb += img2[i][j].b * Mx[i - borneMiniLig][2];
+                    Gxg += img2[i][j].g * Mx[i - borneMiniLig][2];
+                    Gxr += img2[i][j].r * Mx[i - borneMiniLig][2];
+
+                    Gyb += img2[i][j].b * My[i - borneMiniLig][2];
+                    Gyg += img2[i][j].g * My[i - borneMiniLig][2];
+                    Gyr += img2[i][j].r * My[i - borneMiniLig][2];
+                }
+            }
+        }
+    }
+    // Pas d'extremite
+    else
+    {
+        for(i = borneMiniLig; i <= borneMaxiLig; i++)
+        {
+            for(j= borneMiniCol; j <= borneMaxiCol; j++)
+            {
+                Gxb += img2[i][j].b * Mx[i - borneMiniLig][j - borneMiniCol];
+                Gxg += img2[i][j].g * Mx[i - borneMiniLig][j - borneMiniCol];
+                Gxr += img2[i][j].r * Mx[i - borneMiniLig][j - borneMiniCol];
+
+                Gyb += img2[i][j].b * My[i - borneMiniLig][j - borneMiniCol];
+                Gyg += img2[i][j].g * My[i - borneMiniLig ][j - borneMiniCol];
+                Gyr += img2[i][j].r * My[i - borneMiniLig][j - borneMiniCol];
+
+            }
         }
     }
     // Formule des filtres avec gradient

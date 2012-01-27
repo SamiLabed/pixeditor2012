@@ -42,6 +42,8 @@ void GradientDialog:: applyGradient()
     QImage* qtmp = new QImage(*rgbbase.imgexe);
     RgbImage tmp;
     tmp.imgexe = qtmp;
+    float coeff;
+
 
     if(prewitt->isChecked() == false && sobel->isChecked() == false && scharr->isChecked() == false)
     {
@@ -50,7 +52,8 @@ void GradientDialog:: applyGradient()
     else if(prewitt->isChecked() == true)
     {
         Convolution conv(qtmp->height(), qtmp->width());
-        conv.buildGradient(1, 1, 1, (float)spin->value());
+        coeff = (float) spin->value()*2.5;
+        conv.buildGradient(1, 1, 1, coeff);
         for(i=0; i < qtmp->height(); i++)
         {
             for(j=0; j < qtmp->width(); j++)
@@ -64,7 +67,8 @@ void GradientDialog:: applyGradient()
     else if(sobel->isChecked() == true)
     {
         Convolution conv(qtmp->height(), qtmp->width());
-        conv.buildGradient(1, 2, 1, (float)spin->value());
+        coeff = (float) spin->value()*2.5;
+        conv.buildGradient(1, 2, 1, coeff);
         for(i=0; i < qtmp->height(); i++)
         {
             for(j=0; j < qtmp->width(); j++)
@@ -78,7 +82,8 @@ void GradientDialog:: applyGradient()
     else if(scharr->isChecked() == true)
     {
         Convolution conv(qtmp->height(), qtmp->width());
-        conv.buildGradient(3, 10, 3, (float)spin->value());
+        coeff = (float) spin->value()*2.5;
+        conv.buildGradient(3, 10, 3, coeff );
         for(i=0; i < qtmp->height(); i++)
         {
             for(j=0; j < qtmp->width(); j++)

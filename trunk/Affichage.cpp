@@ -1,5 +1,4 @@
 #include "Affichage.h"
-//#include "Affichagelabel.h"
 #include <iostream>
 #include <stdio.h>
 #include "Flou.h"
@@ -15,8 +14,8 @@
 #include "Persodialog.h"
 #include "Accentdialog.h"
 #include "Redimension.h"
+#include "Seamdialog.h"
 #include "Seuildialog.h"
-
 
 Affichage::Affichage()
 {
@@ -35,10 +34,15 @@ void Affichage::setimag(QImage *img)
     rgbimg.imgexe=img;
 }
 
+
 void Affichage::setLabel(AffichageLabel *monlabel)
 {
     affichage=monlabel;
 }
+
+
+
+
 
 void Affichage::nouveau()
 {
@@ -115,9 +119,6 @@ void Affichage::loadImag()
 {
     image = new QImage(nomFichier, 0);
     rgbimg.imgexe = image;
-    //rgbimgold.imgexe=image;
-    //rgbimgold
-    //affichage->rgbimg=rgbimg;
     affichage->load(rgbimg);
 }
 
@@ -130,12 +131,13 @@ void Affichage::setoldrgbimg(RgbImage *rgbImg)
 {
 
     QImage *tmpImage=new QImage(image->width(), image->height(),QImage::Format_RGB32);
-    //RgbImage tmp;
-    rgbimgold.imgexe =tmpImage;
+    rgbimgold.imgexe = tmpImage;
 
     int i,j=0;
-    for(i=0;i<image->height();i++){
-        for(j=0;j<image->width();j++){
+    for(i=0;i<image->height();i++)
+    {
+        for(j=0;j<image->width();j++)
+        {
             rgbimgold[i][j].b=rgbimg[i][j].b;
             rgbimgold[i][j].g=rgbimg[i][j].g;
             rgbimgold[i][j].r=rgbimg[i][j].r;
@@ -149,12 +151,13 @@ void Affichage:: precedent()
     if(nomFichier !=NULL || nomFichier.compare("") <0)
     {
         int i,j=0;
+
         if(image->height() != rgbimgold.imgexe->height())
         {
 
             QImage *tmpImage=new QImage(rgbimgold.imgexe->width(),
                                         rgbimgold.imgexe->height(),QImage::Format_RGB32);
-            //RgbImage tmp;
+
             rgbimg.imgexe =tmpImage;
 
 
@@ -165,10 +168,12 @@ void Affichage:: precedent()
                     rgbimg[i][j].r=rgbimgold[i][j].r;
                 }
             }
-            image=tmpImage;
+
+            tmpImage;
             printImag();
 
-        }else
+        }
+        else
         {
 
             for(i=0;i<image->height();i++){
@@ -190,15 +195,14 @@ void Affichage:: precedent()
         QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
-
-
 }
+
+
 
 void Affichage::printImag()
 {
     affichage->setPixmap(QPixmap::fromImage(*image));
     affichage->setFixedSize(image->width(),image->height());
-    //affichage->move(0,0);
     affichage->load(rgbimg);
     fichier_save = nomFichier;
     is_save = false;
@@ -254,21 +258,21 @@ void Affichage::gris()
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
 }
 
 void Affichage::loadrehausseur()
 {
-    if (nomFichier != NULL)
+    if(nomFichier !=NULL)
     {
         setoldrgbimg(&rgbimg);
         new RehaussDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
 
@@ -277,7 +281,7 @@ void Affichage::loadrehausseur()
 void Affichage::loaddetection()
 {
 
-    if (nomFichier != NULL)
+    if(nomFichier !=NULL)
     {
         setoldrgbimg(&rgbimg);
 
@@ -289,9 +293,9 @@ void Affichage::loaddetection()
         Convolution conv(image->height(), image->width());
         conv.buildLaplace();
 
-        for (i=0; i < image->height(); i++)
+        for(i=0; i < image->height(); i++)
         {
-            for (j=0; j < image->width(); j++)
+            for(j=0; j < image->width(); j++)
             {
                 conv.calculRehausse(i, j, rgbimg, tmp);
             }
@@ -300,7 +304,7 @@ void Affichage::loaddetection()
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
 }
@@ -308,45 +312,58 @@ void Affichage::loaddetection()
 
 void Affichage:: loadgradient()
 {
-    if (nomFichier != NULL)
+    if(nomFichier !=NULL)
     {
         setoldrgbimg(&rgbimg);
         new GradientDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
 }
 
 void Affichage::loadperso()
 {
-    if (nomFichier != NULL)
+    if(nomFichier !=NULL)
     {
         setoldrgbimg(&rgbimg);
         new Persodialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
 
 }
 
 void Affichage::loadaccentuer()
 {
-    if (nomFichier != NULL)
+    if(nomFichier !=NULL)
     {
         setoldrgbimg(&rgbimg);
         new AccentDialog(this, rgbimg);
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
+
 }
 
+void Affichage::loadseam()
+{
+    if(nomFichier !=NULL)
+    {
+        new Seamdialog(this, rgbimg);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
+    }
+
+}
 
 void Affichage::histogrammeRGB()
 {
@@ -431,26 +448,20 @@ void Affichage::seuillage()
 void Affichage::redimension()
 {
 
-     if (nomFichier != NULL)
+     if(nomFichier !=NULL)
     {
          setoldrgbimg(&rgbimg);
        new Redimension(this);
     }
     else
     {
-        QMessageBox::warning(this, "Attention", "Veuillez choisir une image !");
+        QMessageBox::warning(this,"Attention","Veuillez choisir une image !" );
     }
-
-    //ReDim* imgredim = new ReDim(this);
-
-
-
-    //refresh();
 }
 
 
 void Affichage::quitter()
 {
-    if (testSauvegarde())
+    if(testSauvegarde())
         qApp->quit();
 }

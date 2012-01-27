@@ -6,14 +6,12 @@ QT += core \
 TARGET = PixEditor
 TEMPLATE = app
 SOURCES += Affichage.cpp \
-    PixEditor.cpp \
     Main.cpp \
     colorpicker.cpp \
     Floudialog.cpp \
     Flou.cpp \
     Fusion.cpp \
     Fusiondialog.cpp \
-    Gris.cpp \
     Histogramme.cpp \
     Affichagelabel.cpp \
     Gauss.cpp \
@@ -23,6 +21,10 @@ SOURCES += Affichage.cpp \
     Persodialog.cpp \
     Accentdialog.cpp \
     Redimension.cpp \
+    Gris.cpp \
+    Energie.cpp \
+    PixEditor.cpp \
+    Seamdialog.cpp \
     Seuildialog.cpp
 HEADERS += PixEditor.h \
     Affichage.h \
@@ -32,7 +34,6 @@ HEADERS += PixEditor.h \
     Flou.h \
     Fusion.h \
     Fusiondialog.h \
-    Gris.h \
     Histogramme.h \
     Affichagelabel.h \
     Gauss.h \
@@ -42,8 +43,7 @@ HEADERS += PixEditor.h \
     Persodialog.h \
     Accentdialog.h \
     Redimension.h \
+    Energie.h \
     Gris.h \
+    Seamdialog.h \
     Seuildialog.h
-
-
-

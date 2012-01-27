@@ -5,8 +5,8 @@
 #include <QColor>
 #include <QPainter>
 #include <QPen>
-#include </usr/include/c++/4.6/vector>
-#include </usr/include/c++/4.6/algorithm>
+#include <vector>
+#include <algorithm>
 
 using std::vector;
 

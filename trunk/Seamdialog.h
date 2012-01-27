@@ -1,6 +1,7 @@
-#ifndef PERSODIALOG_H
-#define PERSODIALOG_H
+#ifndef SEAMDIALOG_H
+#define SEAMDIALOG_H
 
+#include <QWidget>
 #include <math.h>
 #include <QApplication>
 #include <QWidget>
@@ -20,28 +21,28 @@
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QFormLayout>
-#include <QRadioButton>
 #include "Affichage.h"
 
-class Persodialog : public QWidget
+class Seamdialog : public QWidget
 {
     Q_OBJECT
 public:
-    Persodialog(Affichage* aff, RgbImage rgb);
-    QLabel *labmat1, *labmat2, *labmat3;
-    QGridLayout *grid;
-    QLineEdit* cases[3][3];
-    QPushButton *valider;
-    QPushButton *annuler;
-    RgbImage rgbbase;
-    Affichage* affperso;
-    bool ok[3][3];
-
+     Seamdialog(Affichage* aff, RgbImage rgb);
+     Affichage* affseam;
+     RgbImage rgbmain;
+     QGridLayout* grid;
+     QLabel *largeur;
+     QLabel *hauteur;
+     QLineEdit *line_larg;
+     QLineEdit *line_haut;
+     QPushButton *valider;
+     QPushButton *annuler;
 
 signals:
 
 public slots:
-    void applyPerso();
+     void applySeam();
+
 };
 
-#endif // PERSODIALOG_H
+#endif // SEAMDIALOG_H

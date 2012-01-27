@@ -3,7 +3,6 @@
 #include <QImage>
 #include <stdio.h>
 #include <math.h>
-
 template<class T> class Image
 {
 private:
