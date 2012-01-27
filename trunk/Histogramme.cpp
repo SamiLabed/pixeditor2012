@@ -19,7 +19,6 @@ Histogramme::~Histogramme()
 ///////////////////////////////////////////
 //      Fonction de calcul RGB           //
 ///////////////////////////////////////////
-
 void Histogramme::calculHistoRGB()      /* Calcul de l'histogramme */
 {
     maxValR = 0;
