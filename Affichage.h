@@ -25,7 +25,7 @@
 
 class Affichage : public QWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
 private:
     QGraphicsScene *scene;
     QGraphicsView *vue;
@@ -88,7 +88,8 @@ public slots:
     void loadseam();
     void histogrammeRGB();
     void histogrammeHSV();
-    void equalize();
+    void egalisation();
+    void linearisation();
     void negatif();
     void seuillage();
     void refresh();

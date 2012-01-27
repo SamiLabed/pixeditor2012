@@ -182,9 +182,13 @@ void PixEditor::addMenu()
     QObject::connect(histoHSV_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeHSV()));
     histo_menu->addAction(histoHSV_action);
 
-    equalize_action = new QAction(tr("&Egaliser"),this);
-    QObject::connect(equalize_action, SIGNAL(triggered()), &widgetcentral, SLOT(equalize()));
-    histo_menu->addAction(equalize_action);
+    egalise_action = new QAction(tr("&Egaliser"),this);
+    QObject::connect(egalise_action, SIGNAL(triggered()), &widgetcentral, SLOT(egalisation()));
+    histo_menu->addAction(egalise_action);
+
+    linearise_action = new QAction(tr("&Lineariser"),this);
+    QObject::connect(linearise_action, SIGNAL(triggered()), &widgetcentral, SLOT(linearisation()));
+    histo_menu->addAction(linearise_action);
 
     negatif_action = new QAction(tr("&Negatif"),this);
     QObject::connect(negatif_action, SIGNAL(triggered()), &widgetcentral, SLOT(negatif()));
@@ -193,8 +197,6 @@ void PixEditor::addMenu()
     seuillage_action = new QAction(tr("&Seuillage"),this);
     QObject::connect(seuillage_action, SIGNAL(triggered()), &widgetcentral, SLOT(seuillage()));
     histo_menu->addAction(seuillage_action);
-
-
 
     //color_picker
     picker_action = new QAction(tr("&P&i&xelColor"),this);

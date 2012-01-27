@@ -58,7 +58,8 @@ public:
     int getVecSSize();
     int getVecVSize();
     void cumule();
-    void equalize();
+    void egalisation();
+    void linearisation();
     void negatif();
     void seuillage(int seuil);
 

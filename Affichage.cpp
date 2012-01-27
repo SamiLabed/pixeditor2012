@@ -416,14 +416,26 @@ void Affichage::histogrammeHSV()
     labelV.show();
 }
 
-void Affichage::equalize()
+void Affichage::egalisation()
 {
     QImage* qtmp = new QImage(*rgbimg.imgexe);
     RgbImage tmp;
     tmp.imgexe = qtmp;
     rgbimgold = tmp;
     h = new Histogramme(rgbimg, image->width(), image->height());
-    h->equalize();
+    h->egalisation();
+
+    refresh();
+}
+
+void Affichage::linearisation()
+{
+    QImage* qtmp = new QImage(*rgbimg.imgexe);
+    RgbImage tmp;
+    tmp.imgexe = qtmp;
+    rgbimgold = tmp;
+    h = new Histogramme(rgbimg, image->width(), image->height());
+    h->linearisation();
 
     refresh();
 }

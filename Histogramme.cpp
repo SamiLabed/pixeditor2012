@@ -324,7 +324,7 @@ void Histogramme::cumule()
     }
 }
 
-void Histogramme::equalize()
+void Histogramme::egalisation()
 {
     calculHistoRGB();
     cumule();
@@ -344,6 +344,48 @@ void Histogramme::equalize()
             img[x][y].r = 255*histoCumulR[nivInitR]/(width*height);
             img[x][y].g = 255*histoCumulG[nivInitG]/(width*height);
             img[x][y].b = 255*histoCumulB[nivInitB]/(width*height);
+        }
+    }
+}
+
+void Histogramme::linearisation()
+{
+    int minR = 255;
+    int maxR = 0;
+    int minG = 255;
+    int maxG = 0;
+    int minB = 255;
+    int maxB = 0;
+
+    calculHistoRGB();
+
+    for (i=0; i<256; i++)
+    {
+        if (histoR[i] != 0 && i < minR) minR = i;
+        if (histoR[i] != 0 && i > maxR) maxR = i;
+
+        if (histoG[i] != 0 && i < minG) minG = i;
+        if (histoG[i] != 0 && i > maxG) maxG = i;
+
+        if (histoB[i] != 0 && i < minB) minB = i;
+        if (histoB[i] != 0 && i > maxB) maxB = i;
+    }
+
+    nivInitR = 0;
+    nivInitG = 0;
+    nivInitB = 0;
+
+    for (x=0; x<height; x++)
+    {
+        for (y=0; y<width; y++)
+        {
+            nivInitR = (int)img[x][y].r;
+            nivInitG = (int)img[x][y].g;
+            nivInitB = (int)img[x][y].b;
+
+            img[x][y].r = 255*(nivInitR-minR)/(maxR-minR);
+            img[x][y].g = 255*(nivInitG-minG)/(maxG-minG);
+            img[x][y].b = 255*(nivInitB-minB)/(maxB-minB);
         }
     }
 }
