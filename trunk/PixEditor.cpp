@@ -174,18 +174,25 @@ void PixEditor::addMenu()
     //histogramme
     histo_menu=new QMenu(tr("&Histogramme"),this);
 
-    histoR_action = new QAction(tr("&Rouge"),this);
-    QObject::connect(histoR_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeR()));
-    histo_menu->addAction(histoR_action);
+    histoRGB_action = new QAction(tr("&RGB"),this);
+    QObject::connect(histoRGB_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeRGB()));
+    histo_menu->addAction(histoRGB_action);
 
-    histoG_action = new QAction(tr("&Vert"),this);
-    QObject::connect(histoG_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeG()));
-    histo_menu->addAction(histoG_action);
+    histoHSV_action = new QAction(tr("&HSV"),this);
+    QObject::connect(histoHSV_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeHSV()));
+    histo_menu->addAction(histoHSV_action);
 
-    histoB_action = new QAction(tr("&Bleu"),this);
-    QObject::connect(histoB_action, SIGNAL(triggered()), &widgetcentral, SLOT(histogrammeB()));
-    histo_menu->addAction(histoB_action);
+    equalize_action = new QAction(tr("&Egalisé"),this);
+    QObject::connect(equalize_action, SIGNAL(triggered()), &widgetcentral, SLOT(equalize()));
+    histo_menu->addAction(equalize_action);
 
+    negatif_action = new QAction(tr("&Négatif"),this);
+    QObject::connect(negatif_action, SIGNAL(triggered()), &widgetcentral, SLOT(negatif()));
+    histo_menu->addAction(negatif_action);
+
+    seuillage_action = new QAction(tr("&Seuillage"),this);
+    QObject::connect(seuillage_action, SIGNAL(triggered()), &widgetcentral, SLOT(seuillage()));
+    histo_menu->addAction(seuillage_action);
 
     //color_picker
     picker_action = new QAction(tr("&P&i&xelColor"),this);

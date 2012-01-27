@@ -1,5 +1,5 @@
 #include "Convolution.h"
-#include "gris.h"
+#include "Gris.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
