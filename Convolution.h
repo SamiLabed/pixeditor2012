@@ -1,7 +1,7 @@
 #ifndef REHAUSSEUR_H
 #define REHAUSSEUR_H
 #include "Image.h"
-
+#include <math.h>
 class Convolution
 {
 public:

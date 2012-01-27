@@ -23,30 +23,30 @@ Redimension::Redimension(Affichage *aff)
     //aff
 
 
-//bouton1=new QPushButton("ouvrir");
-bouton2=new QPushButton("redimensioner");
-bouton3=new QPushButton("dimension");
+    //bouton1=new QPushButton("ouvrir");
+    bouton2=new QPushButton("redimensioner");
+    bouton3=new QPushButton("dimension");
 
-QFrame *fram=new QFrame(this);
-fram->setFrameShape(QFrame::StyledPanel);
-fram->setGeometry(0,0,400,50);
+    QFrame *fram=new QFrame(this);
+    fram->setFrameShape(QFrame::StyledPanel);
+    fram->setGeometry(0,0,400,50);
 
-QHBoxLayout *layout1=new QHBoxLayout;
+    QHBoxLayout *layout1=new QHBoxLayout;
 
-//layout1->addWidget(bouton1);
-layout1->addWidget(bouton2);
-layout1->addWidget(bouton3);
-fram->setLayout(layout1);
+    //layout1->addWidget(bouton1);
+    layout1->addWidget(bouton2);
+    layout1->addWidget(bouton3);
+    fram->setLayout(layout1);
 
-bouton2->setEnabled(true);
-bouton3->setEnabled(false);
+    bouton2->setEnabled(true);
+    bouton3->setEnabled(false);
 
-//connect(bouton1,SIGNAL(clicked()),this,SLOT(bouton1clicked()));
-connect(bouton2,SIGNAL(clicked()),this,SLOT(bouton2clicked()));
-connect(bouton3,SIGNAL(clicked()),this,SLOT(bouton3clicked()));
+    //connect(bouton1,SIGNAL(clicked()),this,SLOT(bouton1clicked()));
+    connect(bouton2,SIGNAL(clicked()),this,SLOT(bouton2clicked()));
+    connect(bouton3,SIGNAL(clicked()),this,SLOT(bouton3clicked()));
 
-resize(400,50);
-show();
+    resize(400,50);
+    show();
 }
 
 
@@ -68,62 +68,62 @@ void Redimension::bouton2clicked()
     QStringList items;
     items << tr("Au plus proche 'Standard'") << tr("Bilinear") << tr("Bicubic");
     methode = QInputDialog::getItem(this,tr("choix"),tr("méthode d'interpolation:"),items,0,false,&ok );
-if(ok)
+    if(ok)
     {
-    methode=methode;
-    bouton2->setEnabled(false);
-    bouton3->setEnabled(true);
+        methode=methode;
+        bouton2->setEnabled(false);
+        bouton3->setEnabled(true);
     }
     else
-    methode="Au plus proche 'Standard'";
+        methode="Au plus proche 'Standard'";
 
-  }
+}
 
 void Redimension::bouton3clicked()
 {
-bool ok;
-dim=QInputDialog::getInteger(this,tr("choix de dimension"),tr("taille de sortie en %"),0,10,1000,1,&ok);
-QPixmap monPixmap;
-QImage *img_sortie;
+    bool ok;
+    dim=QInputDialog::getInteger(this,tr("choix de dimension"),tr("taille de sortie en %"),0,10,1000,1,&ok);
+    QPixmap monPixmap;
+    QImage *img_sortie;
 
-RgbImage tmp;
-tmp.imgexe =img_sortie;
+    RgbImage tmp;
+    tmp.imgexe =img_sortie;
 
-if(ok)
-{dim=dim;}
+    if(ok)
+    {dim=dim;}
 
-else
-{ dim=100;}
+    else
+    { dim=100;}
 
-////img_sortie=redimension(double(dim)/100,methode);
-tmp.imgexe=redimension(double(dim)/100,methode);
-//affichage->rgbimg.imgexe=img_sortie;
-////affichage->image=img_sortie;
-////affichage->printImag();
+    ////img_sortie=redimension(double(dim)/100,methode);
+    tmp.imgexe=redimension(double(dim)/100,methode);
+    //affichage->rgbimg.imgexe=img_sortie;
+    ////affichage->image=img_sortie;
+    ////affichage->printImag();
 
-affichage->rgbimg.imgexe=tmp.imgexe;
-affichage->image=tmp.imgexe;
+    affichage->rgbimg.imgexe=tmp.imgexe;
+    affichage->image=tmp.imgexe;
     //affichage->setimag(tmp.imgexe);
-affichage->setRgbimg(&tmp);
-affichage->printImag();
+    affichage->setRgbimg(&tmp);
+    affichage->printImag();
 
-QVBoxLayout *layout=new QVBoxLayout;
-
-
-//QLabel label;
-//monPixmap=QPixmap::fromImage(img_sortie);
-//label.setPixmap(monPixmap);
-//layout->addWidget(&label);
-
-//secondfenetre.setLayout(layout);
-//secondfenetre.setModal(true);
-//secondfenetre.exec();
+    QVBoxLayout *layout=new QVBoxLayout;
 
 
-bouton3->setEnabled(false);
-bouton2->setEnabled(false);
-//bouton1->setEnabled(false);
-this->close();
+    //QLabel label;
+    //monPixmap=QPixmap::fromImage(img_sortie);
+    //label.setPixmap(monPixmap);
+    //layout->addWidget(&label);
+
+    //secondfenetre.setLayout(layout);
+    //secondfenetre.setModal(true);
+    //secondfenetre.exec();
+
+
+    bouton3->setEnabled(false);
+    bouton2->setEnabled(false);
+    //bouton1->setEnabled(false);
+    this->close();
 
 }
 
@@ -131,7 +131,7 @@ this->close();
 //------------------------------------------------------------------------
 
 int Redimension:: arond(double x)
- {
+{
 
     int y;
 
@@ -155,10 +155,10 @@ double Redimension:: min(double x,double y)
     {
         return y;
     }
-     else
+    else
     {
-         return x;
-     }
+        return x;
+    }
 }
 
 //------------------------------------------------------------------------
@@ -229,256 +229,254 @@ QImage* Redimension:: redimension(double n,QString methode)
     {
 
 
-    //debut de la méthode du plus proche element appellée redimensionnement Au plus proche 'Standard'
+        //debut de la méthode du plus proche element appellée redimensionnement Au plus proche 'Standard'
 
-    for(int i=0;i<ls;i++)
-    {
-        for(int j=0;j<cs;j++)
+        for(int i=0;i<ls;i++)
         {
-            x=i*double(le)/(ls);
-            y=j*double(ce)/(cs);
+            for(int j=0;j<cs;j++)
+            {
+                x=i*double(le)/(ls);
+                y=j*double(ce)/(cs);
 
-            x=arond(x);
-            y=arond(y);
+                x=arond(x);
+                y=arond(y);
 
-            x=(int)min(x,le-1);
-            y=(int)min(y,ce-1);
+                x=(int)min(x,le-1);
+                y=(int)min(y,ce-1);
 
-            val=img_entree->pixel(y,x);
+                val=img_entree->pixel(y,x);
 
-            img_sortie->setPixel(j,i,val);
+                img_sortie->setPixel(j,i,val);
 
+            }
         }
-     }
 
 
-   }
+    }
 
     //si on choisit la méthode bilineaire
 
-if(methode=="Bilinear")
+    if(methode=="Bilinear")
     {
 
-    //si l'image est en niveaux de gris on tient compte que d'une composante ici rouge
+        //si l'image est en niveaux de gris on tient compte que d'une composante ici rouge
 
-    if(img_entree->isGrayscale()==true)
-    {
-        for(int i=0;i<ls;i++)
-         {
-             for(int j=0;j<cs;j++)
-             {
-               x=i*double(le)/ls;
-               y=j*double(ce)/cs;
+        if(img_entree->isGrayscale()==true)
+        {
+            for(int i=0;i<ls;i++)
+            {
+                for(int j=0;j<cs;j++)
+                {
+                    x=i*double(le)/ls;
+                    y=j*double(ce)/cs;
 
-               x=min(x,le-1);
-               y=min(y,ce-1);
+                    x=min(x,le-1);
+                    y=min(y,ce-1);
 
-               xr=x;                             // coordonnées réelles
-               yr=y;
+                    xr=x;                             // coordonnées réelles
+                    yr=y;
 
-               x=arond(x);
-               y=arond(y);                       // calcul de l'element le plus proche
-
-
-              // on tombe exactement sur un pixel existant
-
-               if((xr==x)&&(yr==y))
-               {
-                img_sortie->setPixel(j,i,img_entree->pixel(y,x));
-               }
-
-               else
-               {
-               dx[0]=xr-x;              xi[0]=x;
-               dy[0]=yr-y;              yi[0]=y;
-
-               dx[1]=xr-xi[1];          xi[1]=xi[0];
-               dy[1]=yr-yi[1];          yi[1]=yi[0]+1;
-
-               dx[2]=xr-xi[2];          xi[2]=xi[0]+1;
-               dy[2]=yr-yi[2];          yi[2]=yi[0];
-
-               dx[3]=xr-xi[3];          xi[3]=xi[0]+1;
-               dy[3]=yr-yi[3];          yi[3]=yi[0]+1;
+                    x=arond(x);
+                    y=arond(y);                       // calcul de l'element le plus proche
 
 
+                    // on tombe exactement sur un pixel existant
 
-               if(dy[0]==0)
-               {
-                 p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                 p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
-                 p[3]=0;
-                 p[1]=0;
-                 s=p[0]+p[1]+p[2]+p[3];
-                 val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                 val=qRgb(val1,val1,val1);
-                 img_sortie->setPixel(j,i,val);
-               }
-               else if(dx[0]==0)
-               {
-                p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
-                p[2]=0;
-                p[3]=0;
-                s=p[0]+p[1]+p[2]+p[3];
-                val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val=qRgb(val1,val1,val1);
-                img_sortie->setPixel(j,i,val);
+                    if((xr==x)&&(yr==y))
+                    {
+                        img_sortie->setPixel(j,i,img_entree->pixel(y,x));
+                    }
+
+                    else
+                    {
+                        dx[0]=xr-x;              xi[0]=x;
+                        dy[0]=yr-y;              yi[0]=y;
+
+                        dx[1]=xr-xi[1];          xi[1]=xi[0];
+                        dy[1]=yr-yi[1];          yi[1]=yi[0]+1;
+
+                        dx[2]=xr-xi[2];          xi[2]=xi[0]+1;
+                        dy[2]=yr-yi[2];          yi[2]=yi[0];
+
+                        dx[3]=xr-xi[3];          xi[3]=xi[0]+1;
+                        dy[3]=yr-yi[3];          yi[3]=yi[0]+1;
+
+
+
+                        if(dy[0]==0)
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
+                            p[3]=0;
+                            p[1]=0;
+                            s=p[0]+p[1]+p[2]+p[3];
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val1,val1);
+                            img_sortie->setPixel(j,i,val);
+                        }
+                        else if(dx[0]==0)
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
+                            p[2]=0;
+                            p[3]=0;
+                            s=p[0]+p[1]+p[2]+p[3];
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val1,val1);
+                            img_sortie->setPixel(j,i,val);
+                        }
+
+                        else
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
+                            p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
+                            p[3]=1/sqrt(dx[3]*dx[3]+dy[3]*dy[3]);
+                            s=p[0]+p[1]+p[2]+p[3];
+                            s=p[0]+p[1]+p[2]+p[3];
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val1,val1);
+                            img_sortie->setPixel(j,i,val);
+                        }
+
+                    }
                 }
-
-               else
-               {
-                p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
-                p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
-                p[3]=1/sqrt(dx[3]*dx[3]+dy[3]*dy[3]);
-                s=p[0]+p[1]+p[2]+p[3];
-                s=p[0]+p[1]+p[2]+p[3];
-                val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val=qRgb(val1,val1,val1);
-                img_sortie->setPixel(j,i,val);
             }
+        }
 
-           }
-           }
-         }
+
+        //si l'image est en couleur
+
+        else
+        {
+
+            for(int i=0;i<ls;i++)
+            {
+                for(int j=0;j<cs;j++)
+                {
+                    x=i*double(le)/ls;
+                    y=j*double(ce)/cs;
+
+                    x=min(x,le-1);
+                    y=min(y,ce-1);
+
+                    xr=x;                             // coordonnées réelles
+                    yr=y;
+
+                    x=arond(x);
+                    y=arond(y);                       // 1)calcul de l'element le plus proche
+
+
+                    // on tombe exactement sur un pixel existant
+                    if((xr==x)&&(yr==y))
+                    {
+                        img_sortie->setPixel(j,i,img_entree->pixel(y,x));
+                    }
+
+                    else
+                    {
+                        dx[0]=xr-x;              xi[0]=x;
+                        dy[0]=yr-y;              yi[0]=y;
+
+                        dx[1]=xr-xi[1];          xi[1]=xi[0];
+                        dy[1]=yr-yi[1];          yi[1]=yi[0]+1;
+
+                        dx[2]=xr-xi[2];          xi[2]=xi[0]+1;
+                        dy[2]=yr-yi[2];          yi[2]=yi[0];
+
+                        dx[3]=xr-xi[3];          xi[3]=xi[0]+1;
+                        dy[3]=yr-yi[3];          yi[3]=yi[0]+1;
+
+
+
+                        if(dx[0]==0)
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
+                            p[3]=0;
+                            p[2]=0;
+                            s=p[0]+p[1]+p[2]+p[3];
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val3,val2);
+                            img_sortie->setPixel(j,i,val);
+                        }
+                        else if(dy[0]==0)
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[2]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
+                            p[1]=0;
+                            p[3]=0;
+                            s=p[0]+p[1]+p[2]+p[3];
+
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val3,val2);
+                            img_sortie->setPixel(j,i,val);
+                        }
+
+                        else
+                        {
+                            p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
+                            p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
+                            p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
+                            p[3]=1/sqrt(dx[3]*dx[3]+dy[3]*dy[3]);
+                            s=p[0]+p[1]+p[2]+p[3];
+
+                            val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
+                            val=qRgb(val1,val3,val2);
+                            img_sortie->setPixel(j,i,val);
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
 
-    //si l'image est en couleur
+    //les splines Bicubic
 
-    else
+    if(methode=="Bicubic")
     {
-
+        double v1,v2,v3;
         for(int i=0;i<ls;i++)
-         {
-             for(int j=0;j<cs;j++)
-             {
-               x=i*double(le)/ls;
-               y=j*double(ce)/cs;
-
-               x=min(x,le-1);
-               y=min(y,ce-1);
-
-               xr=x;                             // coordonnées réelles
-               yr=y;
-
-               x=arond(x);
-               y=arond(y);                       // 1)calcul de l'element le plus proche
+        {
+            for(int j=0;j<cs;j++)
+            {
+                x=i*double(le)/ls;
+                y=j*double(ce)/cs;
 
 
-              // on tombe exactement sur un pixel existant
-               if((xr==x)&&(yr==y))
-               {
-                img_sortie->setPixel(j,i,img_entree->pixel(y,x));
-               }
+                xr=x;                             // coordonnées réelles
+                yr=y;
 
-               else
-               {
-               dx[0]=xr-x;              xi[0]=x;
-               dy[0]=yr-y;              yi[0]=y;
-
-               dx[1]=xr-xi[1];          xi[1]=xi[0];
-               dy[1]=yr-yi[1];          yi[1]=yi[0]+1;
-
-               dx[2]=xr-xi[2];          xi[2]=xi[0]+1;
-               dy[2]=yr-yi[2];          yi[2]=yi[0];
-
-               dx[3]=xr-xi[3];          xi[3]=xi[0]+1;
-               dy[3]=yr-yi[3];          yi[3]=yi[0]+1;
+                // 1)calcul de l'element le plus proche
+                x=floor(x);
+                y=floor(y);
 
 
 
-               if(dx[0]==0)
-               {
-                 p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                 p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
-                 p[3]=0;
-                 p[2]=0;
-                 s=p[0]+p[1]+p[2]+p[3];
-                 val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                 val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                 val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                 val=qRgb(val1,val3,val2);
-                 img_sortie->setPixel(j,i,val);
-               }
-               else if(dy[0]==0)
-               {
-                p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                p[2]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
-                p[1]=0;
-                p[3]=0;
-                s=p[0]+p[1]+p[2]+p[3];
+                if(x>0 && x<le-1 && y>0 && y<ce-1)
+                {
+                    v1=Hr(img_entree,x,y-1,xr)*c3(yr-y)+Hr(img_entree,x,y,xr)*c2(yr-y)+Hr(img_entree,x,y+1,xr)*c1(yr-y)+Hr(img_entree,x,y+2,xr)*c0(yr-y);
+                    v2=Hg(img_entree,x,y-1,xr)*c3(yr-y)+Hg(img_entree,x,y,xr)*c2(yr-y)+Hg(img_entree,x,y+1,xr)*c1(yr-y)+Hg(img_entree,x,y+2,xr)*c0(yr-y);
+                    v3=Hb(img_entree,x,y-1,xr)*c3(yr-y)+Hb(img_entree,x,y,xr)*c2(yr-y)+Hb(img_entree,x,y+1,xr)*c1(yr-y)+Hb(img_entree,x,y+2,xr)*c0(yr-y);
 
-                val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val=qRgb(val1,val3,val2);
-                img_sortie->setPixel(j,i,val);
+                    val=qRgb(v1,v2,v3);
+                    img_sortie->setPixel(j,i,val);
                 }
-
-               else
-               {
-                p[0]=1/sqrt(dx[0]*dx[0]+dy[0]*dy[0]);
-                p[1]=1/sqrt(dx[1]*dx[1]+dy[1]*dy[1]);
-                p[2]=1/sqrt(dx[2]*dx[2]+dy[2]*dy[2]);
-                p[3]=1/sqrt(dx[3]*dx[3]+dy[3]*dy[3]);
-                s=p[0]+p[1]+p[2]+p[3];
-
-                val1=(p[0]*qRed(img_entree->pixel(yi[0],xi[0]))+p[1]*qRed(img_entree->pixel(yi[1],xi[1]))+p[2]*qRed(img_entree->pixel(yi[2],xi[2]))+p[3]*qRed(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val2=(p[0]*qBlue(img_entree->pixel(yi[0],xi[0]))+p[1]*qBlue(img_entree->pixel(yi[1],xi[1]))+p[2]*qBlue(img_entree->pixel(yi[2],xi[2]))+p[3]*qBlue(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val3=(p[0]*qGreen(img_entree->pixel(yi[0],xi[0]))+p[1]*qGreen(img_entree->pixel(yi[1],xi[1]))+p[2]*qGreen(img_entree->pixel(yi[2],xi[2]))+p[3]*qGreen(img_entree->pixel(yi[3],xi[3])))*(1/s);
-                val=qRgb(val1,val3,val2);
-                img_sortie->setPixel(j,i,val);
+                else{
+                    img_sortie->setPixel(j,i,0);
+                }
             }
-           }
-
-           }
-         }
+        }
     }
-}
-
-
-//les splines Bicubic
-
-if(methode=="Bicubic")
-{
-    double v1,v2,v3;
-for(int i=0;i<ls;i++)
- {
-     for(int j=0;j<cs;j++)
-     {
-       x=i*double(le)/ls;
-       y=j*double(ce)/cs;
-
-
-       xr=x;                             // coordonnées réelles
-       yr=y;
-
-                        // 1)calcul de l'element le plus proche
-       x=floor(x);
-       y=floor(y);
-
-
-
-       if(x>0 && x<le-1 && y>0 && y<ce-1)
-       {
-           v1=Hr(img_entree,x,y-1,xr)*c3(yr-y)+Hr(img_entree,x,y,xr)*c2(yr-y)+Hr(img_entree,x,y+1,xr)*c1(yr-y)+Hr(img_entree,x,y+2,xr)*c0(yr-y);
-           v2=Hg(img_entree,x,y-1,xr)*c3(yr-y)+Hg(img_entree,x,y,xr)*c2(yr-y)+Hg(img_entree,x,y+1,xr)*c1(yr-y)+Hg(img_entree,x,y+2,xr)*c0(yr-y);
-           v3=Hb(img_entree,x,y-1,xr)*c3(yr-y)+Hb(img_entree,x,y,xr)*c2(yr-y)+Hb(img_entree,x,y+1,xr)*c1(yr-y)+Hb(img_entree,x,y+2,xr)*c0(yr-y);
-
-               val=qRgb(v1,v2,v3);
-               img_sortie->setPixel(j,i,val);
-       }
-       else{
-            img_sortie->setPixel(j,i,0);
-            }
-      }
-   }
- }
 
     return img_sortie;
 
 }
-
-
