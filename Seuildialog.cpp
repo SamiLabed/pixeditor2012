@@ -38,8 +38,8 @@ void SeuilDialog::seuillage()
         int imgwidth=rgbbase.imgexe->width();
 
         taille = spinBox->value();
-        Histogramme *h = new Histogramme(rgbbase.imgexe, imgheight, imgwidth);
-
+        Histogramme *h = new Histogramme(rgbbase, imgwidth, imgheight);
+        //printf("taille : %d\n", t);
         h->seuillage(taille);
 
         affiche_seuil->refresh();

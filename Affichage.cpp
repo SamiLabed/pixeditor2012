@@ -418,6 +418,10 @@ void Affichage::histogrammeHSV()
 
 void Affichage::equalize()
 {
+    QImage* qtmp = new QImage(*rgbimg.imgexe);
+    RgbImage tmp;
+    tmp.imgexe = qtmp;
+    rgbimgold = tmp;
     h = new Histogramme(rgbimg, image->width(), image->height());
     h->equalize();
 
@@ -426,6 +430,10 @@ void Affichage::equalize()
 
 void Affichage::negatif()
 {
+    QImage* qtmp = new QImage(*rgbimg.imgexe);
+    RgbImage tmp;
+    tmp.imgexe = qtmp;
+    rgbimgold = tmp;
     h = new Histogramme(rgbimg, image->width(), image->height());
     h->negatif();
 
@@ -436,7 +444,11 @@ void Affichage::seuillage()
 {
     if (nomFichier != NULL)
     {
-        setoldrgbimg(&rgbimg);
+        QImage* qtmp = new QImage(*rgbimg.imgexe);
+        RgbImage tmp;
+        tmp.imgexe = qtmp;
+        rgbimgold = tmp;
+        //setoldrgbimg(&rgbimg);
         new SeuilDialog(this, rgbimg);
     }
     else
@@ -448,10 +460,10 @@ void Affichage::seuillage()
 void Affichage::redimension()
 {
 
-     if(nomFichier !=NULL)
+    if(nomFichier !=NULL)
     {
-         setoldrgbimg(&rgbimg);
-       new Redimension(this);
+        setoldrgbimg(&rgbimg);
+        new Redimension(this);
     }
     else
     {
