@@ -1,0 +1,9 @@
+Q: How to create folder in github.com repository?
+
+A: To create a new folder in github.com repository and add files in that folder:
+-> github doesn't store empty folders. Just make sure there's a file in the folder
+like : "scr/MovingAllFiles.txt" (after the name project : "pixeditor" + "/src/MovingAllFiles.txt") 
+and clic on the button "Commit new file" and the folder will be added to your repository.
+
++To see with image : "Creating folders inside github.com repo without using Git" 
+http://stackoverflow.com/questions/18773598/creating-folders-inside-github-com-repo-without-using-git
